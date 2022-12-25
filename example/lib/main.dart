@@ -4,9 +4,7 @@ import 'v.dart';
 
 import 'c.dart';
 
-
 void main() {
-
   runApp(const MyApp());
 }
 
@@ -86,98 +84,83 @@ class _MyHomePageState extends State<MyHomePage> {
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
-
           mainAxisAlignment: MainAxisAlignment.center,
-          children:  <Widget>[
-
-
-      Container(
-        width: 200,
-        height: 50,
-        child: ThawaniPayBtn(
-          testMode: true,
-          api: 'rRQ26GcsZzoEhbrP2HZvLYDbn9C9et',
-          pKey: 'HGvTMLDssJghr9tlN9gr4DVYt0qyBy',
-          clintID: '1234',
-          onError: (e){
-            print(e);
-          },
-          products: const [
-            {
-              "name": "product 1",
-              "quantity": 1,
-              "unit_amount": 1000
-            },
-            {
-              "name": "product 2",
-              "quantity": 1,
-              "unit_amount": 200
-            }
-          ],
-          onCreate: (v) {
-              // print(create as Map);
-          },
-          onCancelled: (v){
-
-             Navigator.push(context, MaterialPageRoute(builder: (builder)=>C()));
-          },
-          onPaid: (v){
-            Navigator.push(context, MaterialPageRoute(builder: (builder)=>V()));
-          },
-
-
-
-        ),
-      )
+          children: <Widget>[
+            Container(
+              width: 200,
+              height: 50,
+              child: ThawaniPayBtn(
+                testMode: true,
+                api: 'rRQ26GcsZzoEhbrP2HZvLYDbn9C9et',
+                pKey: 'HGvTMLDssJghr9tlN9gr4DVYt0qyBy',
+                clintID: '1234',
+                onError: (e) {
+                  print(e);
+                },
+                products: const [
+                  {"name": "product 1", "quantity": 1, "unit_amount": 1000},
+                  {"name": "product 2", "quantity": 1, "unit_amount": 200}
+                ],
+                onCreate: (v) {
+                  // print(create as Map);
+                },
+                onCancelled: (v) {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (builder) => C()));
+                },
+                onPaid: (v) {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (builder) => V()));
+                },
+              ),
+            )
           ],
         ),
       ),
-  // This trailing comma makes auto-formatting nicer for build methods.
+      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
- //  getRequest() async{
- //    var body={
- //      "client_reference_id": "123412",
- //      "mode": "payment",
- //      "products": [
- //        {
- //          "name": "product 1",
- //          "quantity": 1,
- //          "unit_amount": 1000
- //        }
- //      ],
- //      "success_url": "https://company.com/done",
- //      "cancel_url": "https://company.com/cancel",
- //      "metadata": {
- //        "Customer name": "somename",
- //        "order id": 0
- //      }
- //    };
- //    print("sart");
- //    var url2 = Uri.parse('https://uatcheckout.thawani.om/api/v1/checkout/session');
- // var response=await http.post(url2,
- //
- //        headers: {'thawani-api-key': 'rRQ26GcsZzoEhbrP2HZvLYDbn9C9et','Content-Type':'application/json'},
- //
- //
- //        body:  json.encode(body));
- //    try{
- //      if(response.statusCode==200){
- //        String data=response.body;
- //        var decodeData=jsonDecode(data);
- //
- //        print(decodeData);
- //       Navigator.push(context, MaterialPageRoute(builder: (builder)=>PayWidget(uri: decodeData['data']['session_id'],)));
- //
- //      }
- //      else{
- //        return'failed';
- //      }
- //    }catch(e){
- //      return 'failed';
- //    }
- //
- //  }
+  //  getRequest() async{
+  //    var body={
+  //      "client_reference_id": "123412",
+  //      "mode": "payment",
+  //      "products": [
+  //        {
+  //          "name": "product 1",
+  //          "quantity": 1,
+  //          "unit_amount": 1000
+  //        }
+  //      ],
+  //      "success_url": "https://company.com/done",
+  //      "cancel_url": "https://company.com/cancel",
+  //      "metadata": {
+  //        "Customer name": "somename",
+  //        "order id": 0
+  //      }
+  //    };
+  //    print("sart");
+  //    var url2 = Uri.parse('https://uatcheckout.thawani.om/api/v1/checkout/session');
+  // var response=await http.post(url2,
+  //
+  //        headers: {'thawani-api-key': 'rRQ26GcsZzoEhbrP2HZvLYDbn9C9et','Content-Type':'application/json'},
+  //
+  //
+  //        body:  json.encode(body));
+  //    try{
+  //      if(response.statusCode==200){
+  //        String data=response.body;
+  //        var decodeData=jsonDecode(data);
+  //
+  //        print(decodeData);
+  //       Navigator.push(context, MaterialPageRoute(builder: (builder)=>PayWidget(uri: decodeData['data']['session_id'],)));
+  //
+  //      }
+  //      else{
+  //        return'failed';
+  //      }
+  //    }catch(e){
+  //      return 'failed';
+  //    }
+  //
+  //  }
 }
-
-

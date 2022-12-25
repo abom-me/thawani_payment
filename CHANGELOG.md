@@ -11,3 +11,6 @@
 * Adding Button Style
 * Adding Test Mode To try the api as Test
 
+## 0.0.2
+
+* Format Data

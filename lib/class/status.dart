@@ -1,5 +1,4 @@
-
-class StatusClass{
+class StatusClass {
   bool? success;
   int? code;
   String? description;
@@ -14,12 +13,11 @@ class StatusClass{
     this.metadata,
   });
 
-  StatusClass.fromJson(Map<String, dynamic> json){
+  StatusClass.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    code= json['code'];
+    code = json['code'];
     description = json['description'];
     data = json['data'];
     metadata = json['metadata'];
   }
-
 }

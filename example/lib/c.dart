@@ -10,13 +10,12 @@ class C extends StatefulWidget {
 class _CState extends State<C> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-
+    return Scaffold(
       body: Center(
         child: InkWell(
-          onTap: (){
-            Navigator.pop(context);
-          },
+            onTap: () {
+              Navigator.pop(context);
+            },
             child: Text('Cancelled')),
       ),
     );

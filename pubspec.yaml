@@ -1,6 +1,6 @@
 name: thawani_payment
-description: A package helps you to use thawani checkout api , to add thawani payment in Flutter App
-version: 0.0.1
+description: A package helps you to use thawani checkout api , to add thawani payment in  Flutter App
+version: 0.0.2
 homepage: https://github.com/abom-me/thawani_payment
 
 environment:
