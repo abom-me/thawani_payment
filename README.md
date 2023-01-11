@@ -1,5 +1,8 @@
 # thawani_payment:
 
+<img src='https://abom.me/packages/thawani_flutter.png'  >
+<br>
+
 
 ####  A package helps you to use thawani checkout api , to add thawani payment in Flutter App
 
@@ -38,7 +41,7 @@ Pubspec changes:
 
 ```
       dependencies:
-        thawani_payment: ^0.0.1
+        thawani_payment: <last_verison>
 ```
 Sample example:
 
