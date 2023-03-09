@@ -18,3 +18,17 @@
 ## 0.0.3
 
 * Fix  Bugs
+
+## 0.0.4
+
+* Format Data
+
+
+## 0.0.4-dev-1.0.0
+* Fix Bugs
+## 0.0.4-dev-1.1.0
+* Fix Bugs
+
+## 0.0.5
+* Fixing metaData bug
+* Fixing webview bug in ios
