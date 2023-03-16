@@ -10,12 +10,14 @@ class PayWidget extends StatefulWidget {
       required this.paid,
       required this.unpaid,
       required this.url,
-      required this.api})
+      required this.api,
+      required this.testMode})
       : super(key: key);
   final String uri;
   final String url;
   final String api;
   final Function paid;
+  final bool testMode;
   final Function unpaid;
 
   @override
@@ -43,8 +45,8 @@ class _PayWidgetState extends State<PayWidget> {
                 onPageFinished: (String url) {},
                 onWebResourceError: (WebResourceError error) {},
                 onNavigationRequest: (NavigationRequest request) async {
-                  var dataBack =
-                      await RequestHelper.getRequest(widget.uri, widget.api);
+                  var dataBack = await RequestHelper.getRequest(
+                      widget.uri, widget.api, widget.testMode);
                   if (dataBack['data']['payment_status'] == "paid" &&
                       request.url == dataBack['data']['success_url']) {
                     widget.paid(dataBack);

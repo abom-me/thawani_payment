@@ -24,6 +24,7 @@ class ThawaniPayBtn extends StatefulWidget {
       : super(key: key);
 
   ///  API Code From Thawani Company
+  ///
   ///  For Test Mode: rRQ26GcsZzoEhbrP2HZvLYDbn9C9et
   final String api;
 
@@ -142,8 +143,10 @@ class _ThawaniPayBtnState extends State<ThawaniPayBtn> {
                 "client_reference_id": clintID,
                 "mode": "payment",
                 "products": products,
-                "success_url": widget.successUrl ?? 'https://company.com/a',
-                "cancel_url": widget.cancelUrl ?? "https://company.com/b",
+                "success_url": widget.successUrl ??
+                    'https://abom.me/package/thawani/suc.php',
+                "cancel_url": widget.cancelUrl ??
+                    "https://abom.me/package/thawani/can.php",
                 widget.metadata != null ? "metadata" : widget.metadata: null,
               },
               testMode);
@@ -168,6 +171,7 @@ class _ThawaniPayBtnState extends State<ThawaniPayBtn> {
                             payStatus(statusClass)
                                 .then((value) => {widget.onCancelled(value)});
                           },
+                          testMode: testMode,
                         )));
           } else if (dataBack['code'] != 2004) {
             return widget.onError!(dataBack);

@@ -32,3 +32,7 @@
 ## 0.0.5
 * Fixing metaData bug
 * Fixing webview bug in ios
+
+
+## 0.0.6
+* Fixing the crash when make the test mode false 

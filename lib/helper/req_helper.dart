@@ -2,9 +2,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class RequestHelper {
-  static Future getRequest(String session, api) async {
-    var url = Uri.parse(
-        'https://uatcheckout.thawani.om/api/v1/checkout/session/$session');
+  static Future getRequest(String session, api, bool test) async {
+    var url = test == true
+        ? Uri.parse(
+            'https://uatcheckout.thawani.om/api/v1/checkout/session/$session')
+        : Uri.parse(
+            'https://checkout.thawani.om/api/v1/checkout/session/$session');
     http.Response response = await http.get(
       url,
       headers: {'thawani-api-key': api, 'Content-Type': 'application/json'},

@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="11a198f4-56f2-4076-9f63-1d2f8388e353" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/screenshots/thawani-package.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screenshots/thawani_flutter.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/generated/assets.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/helper/req_helper.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/helper/req_helper.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/widgets/pay.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/pay.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/widgets/pay_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/pay_button.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
@@ -89,7 +84,7 @@
       <workItem from="1673421809555" duration="1817000" />
       <workItem from="1675355215513" duration="1371000" />
       <workItem from="1677790043501" duration="2465000" />
-      <workItem from="1678381862364" duration="2367000" />
+      <workItem from="1678381862364" duration="5832000" />
     </task>
     <servers />
   </component>
