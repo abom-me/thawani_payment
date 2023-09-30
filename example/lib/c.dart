@@ -16,7 +16,7 @@ class _CState extends State<C> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Text('Cancelled')),
+            child: const Text('Cancelled')),
       ),
     );
   }

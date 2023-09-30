@@ -36,3 +36,17 @@
 
 ## 0.0.6
 * Fixing the crash when make the test mode false 
+
+
+## 0.0.7-beta-1.0.0
+* Add function Thawani.pay to can pay without using the button
+* 
+* ## 0.0.7-beta-1.0.1
+* Add function Thawani.pay to can pay without using the button
+
+* ## 0.0.8
+* Add function Thawani.pay to can pay without using the button
+* Fix the crash when make add products
+* Fix the example app
+* Update the webview
+

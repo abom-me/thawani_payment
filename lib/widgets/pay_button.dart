@@ -147,7 +147,7 @@ class _ThawaniPayBtnState extends State<ThawaniPayBtn> {
                     'https://abom.me/package/thawani/suc.php',
                 "cancel_url": widget.cancelUrl ??
                     "https://abom.me/package/thawani/can.php",
-                widget.metadata != null ? "metadata" : widget.metadata: null,
+               if( widget.metadata != null)  "metadata" : widget.metadata,
               },
               testMode);
           if (dataBack['code'] == 2004) {

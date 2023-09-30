@@ -43,12 +43,31 @@ Pubspec changes:
       dependencies:
         thawani_payment: <last_verison>
 ```
-Sample example:
+Sample example to add pay button :
 
 ```dart
 import 'package:thawani_payment/thawani_payment.dart';
 
 ThawaniPayBtn(
+  api: 'API Key',
+          pKey: 'Publishable Key',
+          clintID: 'String',
+          onError: (e){},
+          products:[],
+          onCreate: (v) {},
+          onCancelled: (v){},
+          onPaid: (v){}, 
+          );
+```
+-----
+
+
+Sample example to add pay function :
+
+```dart
+import 'package:thawani_payment/thawani_payment.dart';
+
+Thawani.pay(
   api: 'API Key',
           pKey: 'Publishable Key',
           clintID: 'String',

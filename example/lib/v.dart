@@ -10,7 +10,7 @@ class V extends StatefulWidget {
 class _VState extends State<V> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

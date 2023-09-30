@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_payment/functions.dart';
 import 'package:thawani_payment/widgets/pay_button.dart';
 
 import 'v.dart';
@@ -79,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text('Thawani Payment Example'),
+        title: const Text('Thawani Payment Example'),
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -87,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
+            SizedBox(
               width: 200,
               height: 50,
               child: ThawaniPayBtn(
@@ -107,13 +108,44 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 onCancelled: (v) {
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (builder) => C()));
+                      context, MaterialPageRoute(builder: (builder) => const C()));
                 },
                 onPaid: (v) {
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (builder) => V()));
+                      context, MaterialPageRoute(builder: (builder) => const V()));
                 },
               ),
+            ),
+            const SizedBox(height: 20),
+            const Text("Pay Function without pay button"),
+            const SizedBox(height: 10),
+            
+            InkWell(
+              onTap: () async {
+            Thawani.pay(context,   testMode: true,
+               api: 'rRQ26GcsZzoEhbrP2HZvLYDbn9C9et',
+               pKey: 'HGvTMLDssJghr9tlN9gr4DVYt0qyBy',
+               clintID: '1234',
+               onError: (e) {
+                 print(e);
+               },
+               products: const [
+                 {"name": "product 1", "quantity": 1, "unit_amount": 1000},
+                 {"name": "product 2", "quantity": 1, "unit_amount": 200}
+               ],
+               onCreate: (v) {
+                 // print(create as Map);
+               },
+               onCancelled: (v) {
+                 Navigator.push(
+                     context, MaterialPageRoute(builder: (builder) => const C()));
+               },
+               onPaid: (v) {
+                 Navigator.push(
+                     context, MaterialPageRoute(builder: (builder) => const V()));
+               },);
+              },
+              child: const Text("Pay Function"),
             )
           ],
         ),
