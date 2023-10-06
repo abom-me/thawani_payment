@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thawani_payment/models/create_customers.dart';
+import 'package:thawani_payment/models/saveed_cards_model.dart';
+import 'package:thawani_payment/viewmodel/thawani_cards.dart';
+import 'package:thawani_payment/viewmodel/thawani_customer.dart';
 import 'package:thawani_payment/widgets/pay.dart';
+import 'package:thawani_payment/widgets/saved_cards_screen.dart';
 
-import 'class/create.dart';
-import 'class/status.dart';
+import 'models/create.dart';
+import 'models/status.dart';
 import 'helper/req_helper.dart';
 
 class Thawani {
-
   ///  API Code From Thawani Company
   ///
   ///  For Test Mode: rRQ26GcsZzoEhbrP2HZvLYDbn9C9et
@@ -55,7 +60,7 @@ class Thawani {
   ///        "quantity": the quantity of the line product,  >=1 <=100
   ///       }
   ///     ]
-  final List<Map<String,dynamic>> products;
+  final List<Map<String, dynamic>> products;
 
   /// Useful for storing additional information about your products, customers (From Thawani API Doc).
   ///
@@ -84,30 +89,83 @@ class Thawani {
   ///The Function And The Reason Of The Error,  If Any Error Happen.
   final Function(Map error)? onError;
 
+  /// Make It true If you want allow the customer to save the payment card
+  final bool saveCard;
+
+  /// This function show you the Customer Data if it's a new Customer
+  final Function(CreateCustomerModel data)? onCreateCustomer;
+
+  /// This function show you the Customer Data if it's a new Customer
+  final Function(List<CardData> data)? savedCards;
+  final bool? showSavedCards;
+
   // Thawani({required this.n});
 
-  Thawani.pay(BuildContext context,{ required this.api,
-    required this.products,
-    required this.onCreate,
-    required this.onCancelled,
-    required this.onPaid,
-    this.child,
-    required this.pKey,
-    this.metadata,
-    required this.clintID,
-    this.buttonStyle,
-    this.testMode,
-    this.onError,
-    this.successUrl,
-    this.cancelUrl}){
-    pay(context: context, api: api, publishKey: pKey, clintID: clintID, products: products, onCreate: onCreate, onCancelled: onCancelled, onPaid: onPaid, onError: onError);
+  Thawani.pay(BuildContext context,
+      {required this.api,
+      required this.products,
+      required this.onCreate,
+      required this.onCancelled,
+      required this.onPaid,
+      this.child,
+      required this.pKey,
+      this.metadata,
+      required this.clintID,
+      this.buttonStyle,
+      this.testMode,
+      required this.saveCard,
+      this.onError,
+      this.onCreateCustomer,
+      this.showSavedCards,
+      this.savedCards,
+      this.successUrl,
+      this.cancelUrl}) {
+    ThawaniCustomer().checker(
+        testMode: testMode ?? false,
+        apiKey: api,
+        customerId: clintID,
+        onError: (error) {},
+        onDone: (id, clint) {
+
+          ThawaniCards().get(
+              testMode: testMode ?? false,
+              customerId: id,
+              apiKey: api,
+              onError: (error) {},
+              onDone: (data) {
+                if(data.data!.isEmpty){
+                  pay(context: context, api: api, publishKey: pKey, clintID: clintID, products: products, onCreate: onCreate, onCancelled: onCancelled, onPaid: onPaid, onError: onError, customerID: id);
+                }else{
+
+savedCards!(data.data!);
+
+
+int totalAmount = 0;
+
+for (var product in products) {
+  totalAmount += int.parse(product["unit_amount"].toString());
+}
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SavedCardsScreen(saved: data, apiKey: api, amount: totalAmount, returnLink:    successUrl ?? 'https://abom.me/package/thawani/suc.php', testMode: testMode??false,metadata: metadata, onCancelled: (StatusClass payStatus) { onCancelled(payStatus); }, onPaid: (StatusClass payStatus) { onPaid(payStatus); },)));
+                }
+              });
+        },
+        newCustomer: (CreateCustomerModel userData) async {
+          SharedPreferences share = await SharedPreferences.getInstance();
+          share.setString("customerId", userData.data!.id!);
+          if (userData.data != null) onCreateCustomer!(userData);
+        });
+    // pay(context: context, api: api, publishKey: pKey, clintID: clintID, products: products, onCreate: onCreate, onCancelled: onCancelled, onPaid: onPaid, onError: onError);
   }
 
-   pay( {
+  pay({
     required BuildContext context,
     required String api,
     required String publishKey,
     required String clintID,
+    required String customerID,
     required List<Map<String, dynamic>> products,
     String? successUrl,
     String? cancelUrl,
@@ -124,7 +182,6 @@ class Thawani {
     ///The Function And The Reason Of The Error,  If Any Error Happen.
     required Function(Map error)? onError,
   }) async {
-
     late Map<String, dynamic> dataBack;
 
     Future<Create> createS() async {
@@ -138,13 +195,15 @@ class Thawani {
     dataBack = await RequestHelper.postRequest(
         api,
         {
+          "customer_id":customerID,
+          "save_card_on_success":saveCard,
           "client_reference_id": clintID,
           "mode": "payment",
           "products": products,
           "success_url":
               successUrl ?? 'https://abom.me/package/thawani/suc.php',
           "cancel_url": cancelUrl ?? "https://abom.me/package/thawani/can.php",
-         if( metadata != null ) "metadata" : metadata,
+          if (metadata != null) "metadata": metadata,
         },
         testMode);
     print(dataBack);
@@ -154,22 +213,21 @@ class Thawani {
           context,
           MaterialPageRoute(
               builder: (context) => PayWidget(
-                api: api,
-                uri: dataBack['data']['session_id'],
-                url: testMode == true
-                    ? 'https://uatcheckout.thawani.om/pay/${dataBack['data']['session_id']}?key=$publishKey'
-                    : 'https://checkout.thawani.om/pay/${dataBack['data']['session_id']}?key=$publishKey',
-                paid: (statusClass) {
-                  payStatus(statusClass).then((value) => {onPaid(value)});
-                },
-                unpaid: (statusClass) {
-                  payStatus(statusClass)
-                      .then((value) => {onCancelled(value)});
-                },
-                testMode: testMode,
-              )));
+                    api: api,
+                    uri: dataBack['data']['session_id'],
+                    url: testMode == true
+                        ? 'https://uatcheckout.thawani.om/pay/${dataBack['data']['session_id']}?key=$publishKey'
+                        : 'https://checkout.thawani.om/pay/${dataBack['data']['session_id']}?key=$publishKey',
+                    paid: (statusClass) {
+                      payStatus(statusClass).then((value) => {onPaid(value)});
+                    },
+                    unpaid: (statusClass) {
+                      payStatus(statusClass)
+                          .then((value) => {onCancelled(value)});
+                    },
+                    testMode: testMode,
+                  )));
       if (context.mounted) return;
-
     } else if (dataBack['code'] != 2004) {
       return onError!(dataBack);
     } else if (dataBack['code'] == null) {

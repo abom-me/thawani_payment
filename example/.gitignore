@@ -1,5 +1,5 @@
 # Miscellaneous
-*.class
+*.models
 *.log
 *.pyc
 *.swp

@@ -15,7 +15,7 @@ class _VState extends State<V> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Paid'),
+            Text('Thank You!,You Successfully Paid',style: TextStyle(color: Colors.green,fontSize: 20,fontWeight: FontWeight.bold),),
           ],
         ),
       ),

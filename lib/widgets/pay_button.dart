@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thawani_payment/widgets/pay.dart';
-import '../class/create.dart';
-import '../class/status.dart';
+import '../models/create.dart';
+import '../models/status.dart';
 import '../helper/req_helper.dart';
 
 class ThawaniPayBtn extends StatefulWidget {
