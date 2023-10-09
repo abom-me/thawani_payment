@@ -28,19 +28,15 @@ class Request {
     }
   }
 
- 
-
- 
-
   static Future post({
     required String url,
     required Map<String, dynamic> data,
     required Map<String, String> headers,
   }) async {
     var url2 = Uri.parse(url);
-headers.addAll({ 'Content-Type': 'application/json'});
+    headers.addAll({'Content-Type': 'application/json'});
     http.Response response =
-        await http.post(url2, headers:headers , body: jsonEncode(data));
+        await http.post(url2, headers: headers, body: jsonEncode(data));
 
     String data2 = response.body;
     var decodeData = jsonDecode(data2);
@@ -86,7 +82,7 @@ headers.addAll({ 'Content-Type': 'application/json'});
     Map<String, String> headerData = headers
       ..addAll({'content-type': 'application/json'});
     http.Response response =
-    await http.patch(url2, headers: headerData, body: jsonEncode(data));
+        await http.patch(url2, headers: headerData, body: jsonEncode(data));
     String data2 = response.body;
     var decodeData = jsonDecode(data2);
     return {'status': response.statusCode, 'data': decodeData};

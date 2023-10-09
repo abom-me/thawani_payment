@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-ConformPaymentModel conformPaymentModelFromJson(String str) => ConformPaymentModel.fromJson(json.decode(str));
+ConformPaymentModel conformPaymentModelFromJson(String str) =>
+    ConformPaymentModel.fromJson(json.decode(str));
 
-String conformPaymentModelToJson(ConformPaymentModel data) => json.encode(data.toJson());
+String conformPaymentModelToJson(ConformPaymentModel data) =>
+    json.encode(data.toJson());
 
 class ConformPaymentModel {
   bool? success;
@@ -34,19 +36,20 @@ class ConformPaymentModel {
         data: data ?? this.data,
       );
 
-  factory ConformPaymentModel.fromJson(Map<String, dynamic> json) => ConformPaymentModel(
-    success: json["success"],
-    code: json["code"],
-    description: json["description"],
-    data: json["data"] == null ? null : Data.fromJson(json["data"]),
-  );
+  factory ConformPaymentModel.fromJson(Map<String, dynamic> json) =>
+      ConformPaymentModel(
+        success: json["success"],
+        code: json["code"],
+        description: json["description"],
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "success": success,
-    "code": code,
-    "description": description,
-    "data": data?.toJson(),
-  };
+        "success": success,
+        "code": code,
+        "description": description,
+        "data": data?.toJson(),
+      };
 }
 
 class Data {
@@ -100,30 +103,38 @@ class Data {
       );
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    id: json["id"],
-    clientReferenceId: json["client_reference_id"],
-    amount: json["amount"],
-    currency: json["currency"],
-    paymentMethod: json["payment_method"],
-    nextAction: json["next_action"] == null ? null : NextAction.fromJson(json["next_action"]),
-    status: json["status"],
-    metadata: json["metadata"] == null ? null : Metadata.fromJson(json["metadata"]),
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    expireAt: json["expire_at"] == null ? null : DateTime.parse(json["expire_at"]),
-  );
+        id: json["id"],
+        clientReferenceId: json["client_reference_id"],
+        amount: json["amount"],
+        currency: json["currency"],
+        paymentMethod: json["payment_method"],
+        nextAction: json["next_action"] == null
+            ? null
+            : NextAction.fromJson(json["next_action"]),
+        status: json["status"],
+        metadata: json["metadata"] == null
+            ? null
+            : Metadata.fromJson(json["metadata"]),
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        expireAt: json["expire_at"] == null
+            ? null
+            : DateTime.parse(json["expire_at"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "client_reference_id": clientReferenceId,
-    "amount": amount,
-    "currency": currency,
-    "payment_method": paymentMethod,
-    "next_action": nextAction?.toJson(),
-    "status": status,
-    "metadata": metadata?.toJson(),
-    "created_at": createdAt?.toIso8601String(),
-    "expire_at": expireAt?.toIso8601String(),
-  };
+        "id": id,
+        "client_reference_id": clientReferenceId,
+        "amount": amount,
+        "currency": currency,
+        "payment_method": paymentMethod,
+        "next_action": nextAction?.toJson(),
+        "status": status,
+        "metadata": metadata?.toJson(),
+        "created_at": createdAt?.toIso8601String(),
+        "expire_at": expireAt?.toIso8601String(),
+      };
 }
 
 class Metadata {
@@ -141,12 +152,12 @@ class Metadata {
       );
 
   factory Metadata.fromJson(Map<String, dynamic> json) => Metadata(
-    customer: json["customer"],
-  );
+        customer: json["customer"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "customer": customer,
-  };
+        "customer": customer,
+      };
 }
 
 class NextAction {
@@ -168,12 +179,12 @@ class NextAction {
       );
 
   factory NextAction.fromJson(Map<String, dynamic> json) => NextAction(
-    url: json["url"],
-    returnUrl: json["return_url"],
-  );
+        url: json["url"],
+        returnUrl: json["return_url"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "url": url,
-    "return_url": returnUrl,
-  };
+        "url": url,
+        "return_url": returnUrl,
+      };
 }

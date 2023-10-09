@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-CreateCustomerModel createCustomerModelFromJson(String str) => CreateCustomerModel.fromJson(json.decode(str));
+CreateCustomerModel createCustomerModelFromJson(String str) =>
+    CreateCustomerModel.fromJson(json.decode(str));
 
-String createCustomerModelToJson(CreateCustomerModel data) => json.encode(data.toJson());
+String createCustomerModelToJson(CreateCustomerModel data) =>
+    json.encode(data.toJson());
 
 class CreateCustomerModel {
   bool? success;
@@ -34,19 +36,20 @@ class CreateCustomerModel {
         data: data ?? this.data,
       );
 
-  factory CreateCustomerModel.fromJson(Map<String, dynamic> json) => CreateCustomerModel(
-    success: json["success"],
-    code: json["code"],
-    description: json["description"],
-    data: json["data"] == null ? null : Data.fromJson(json["data"]),
-  );
+  factory CreateCustomerModel.fromJson(Map<String, dynamic> json) =>
+      CreateCustomerModel(
+        success: json["success"],
+        code: json["code"],
+        description: json["description"],
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "success": success,
-    "code": code,
-    "description": description,
-    "data": data?.toJson(),
-  };
+        "success": success,
+        "code": code,
+        "description": description,
+        "data": data?.toJson(),
+      };
 }
 
 class Data {
@@ -68,12 +71,12 @@ class Data {
       );
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    id: json["id"],
-    customerClientId: json["customer_client_id"],
-  );
+        id: json["id"],
+        customerClientId: json["customer_client_id"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "customer_client_id": customerClientId,
-  };
+        "id": id,
+        "customer_client_id": customerClientId,
+      };
 }

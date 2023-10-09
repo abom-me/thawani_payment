@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-CustomersModel customersModelFromJson(String str) => CustomersModel.fromJson(json.decode(str));
+CustomersModel customersModelFromJson(String str) =>
+    CustomersModel.fromJson(json.decode(str));
 
 String customersModelToJson(CustomersModel data) => json.encode(data.toJson());
 
@@ -35,18 +36,22 @@ class CustomersModel {
       );
 
   factory CustomersModel.fromJson(Map<String, dynamic> json) => CustomersModel(
-    success: json["success"],
-    code: json["code"],
-    description: json["description"],
-    data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
-  );
+        success: json["success"],
+        code: json["code"],
+        description: json["description"],
+        data: json["data"] == null
+            ? []
+            : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "success": success,
-    "code": code,
-    "description": description,
-    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
-  };
+        "success": success,
+        "code": code,
+        "description": description,
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+      };
 }
 
 class Datum {
@@ -68,12 +73,12 @@ class Datum {
       );
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    id: json["id"],
-    customerClientId: json["customer_client_id"],
-  );
+        id: json["id"],
+        customerClientId: json["customer_client_id"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "customer_client_id": customerClientId,
-  };
+        "id": id,
+        "customer_client_id": customerClientId,
+      };
 }

@@ -50,3 +50,15 @@
 * Fix the example app
 * Update the webview
 
+* ## 1.1.0
+* Delete `ThawaniPayBtn` replace it with `Thawani.pay`.
+* Add function `Thawani.pay` to can pay.
+* Add `bool saveCards` to you can save the customer cards.
+* Add `onCreateCustomer` to you can get the customer Id after create it.
+* Add auto save for the customer id in the local storage
+* Add a new screen to show he saved card
+* Add `savedCardBackground` to change the background color of the cards.
+* Add `savedCardTextColor` to change the text color of the cards.
+* and more...
+
+

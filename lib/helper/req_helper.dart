@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
- class RequestHelper {
+class RequestHelper {
   static Future getRequest(String session, api, bool test) async {
     var url = test == true
         ? Uri.parse(
@@ -26,7 +26,8 @@ import 'package:http/http.dart' as http;
     }
   }
 
-  static Future postRequest(String api, Map<String,dynamic> body, bool testMood) async {
+  static Future postRequest(
+      String api, Map<String, dynamic> body, bool testMood) async {
     var url2 = testMood == true
         ? Uri.parse('https://uatcheckout.thawani.om/api/v1/checkout/session')
         : Uri.parse('https://checkout.thawani.om/api/v1/checkout/session');

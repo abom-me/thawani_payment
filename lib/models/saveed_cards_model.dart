@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-SavedCardsModel savedCardsModelFromJson(String str) => SavedCardsModel.fromJson(json.decode(str));
+SavedCardsModel savedCardsModelFromJson(String str) =>
+    SavedCardsModel.fromJson(json.decode(str));
 
-String savedCardsModelToJson(SavedCardsModel data) => json.encode(data.toJson());
+String savedCardsModelToJson(SavedCardsModel data) =>
+    json.encode(data.toJson());
 
 class SavedCardsModel {
   bool? success;
@@ -34,19 +36,25 @@ class SavedCardsModel {
         data: data ?? this.data,
       );
 
-  factory SavedCardsModel.fromJson(Map<String, dynamic> json) => SavedCardsModel(
-    success: json["success"],
-    code: json["code"],
-    description: json["description"],
-    data: json["data"] == null ? [] : List<CardData>.from(json["data"]!.map((x) => CardData.fromJson(x))),
-  );
+  factory SavedCardsModel.fromJson(Map<String, dynamic> json) =>
+      SavedCardsModel(
+        success: json["success"],
+        code: json["code"],
+        description: json["description"],
+        data: json["data"] == null
+            ? []
+            : List<CardData>.from(
+                json["data"]!.map((x) => CardData.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "success": success,
-    "code": code,
-    "description": description,
-    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
-  };
+        "success": success,
+        "code": code,
+        "description": description,
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+      };
 }
 
 class CardData {
@@ -96,28 +104,30 @@ class CardData {
       );
 
   factory CardData.fromJson(Map<String, dynamic> json) => CardData(
-    id: json["id"],
-    bin: json["bin"],
-    maskedCard: json["masked_card"],
-    expiryMonth: json["expiry_month"],
-    expiryYear: json["expiry_year"],
-    nickname: json["nickname"],
-    brand: json["brand"],
-    cardType: json["card_type"],
-    customer: json["customer"] == null ? null : Customer.fromJson(json["customer"]),
-  );
+        id: json["id"],
+        bin: json["bin"],
+        maskedCard: json["masked_card"],
+        expiryMonth: json["expiry_month"],
+        expiryYear: json["expiry_year"],
+        nickname: json["nickname"],
+        brand: json["brand"],
+        cardType: json["card_type"],
+        customer: json["customer"] == null
+            ? null
+            : Customer.fromJson(json["customer"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "bin": bin,
-    "masked_card": maskedCard,
-    "expiry_month": expiryMonth,
-    "expiry_year": expiryYear,
-    "nickname": nickname,
-    "brand": brand,
-    "card_type": cardType,
-    "customer": customer?.toJson(),
-  };
+        "id": id,
+        "bin": bin,
+        "masked_card": maskedCard,
+        "expiry_month": expiryMonth,
+        "expiry_year": expiryYear,
+        "nickname": nickname,
+        "brand": brand,
+        "card_type": cardType,
+        "customer": customer?.toJson(),
+      };
 }
 
 class Customer {
@@ -139,12 +149,12 @@ class Customer {
       );
 
   factory Customer.fromJson(Map<String, dynamic> json) => Customer(
-    id: json["id"],
-    customerClientId: json["customer_client_id"],
-  );
+        id: json["id"],
+        customerClientId: json["customer_client_id"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "customer_client_id": customerClientId,
-  };
+        "id": id,
+        "customer_client_id": customerClientId,
+      };
 }

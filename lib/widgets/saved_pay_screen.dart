@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:thawani_payment/models/status.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../helper/req_helper.dart';
 import '../viewmodel/thawani_paymentIntent.dart';
 
 class PaySavedWidget extends StatefulWidget {
   const PaySavedWidget(
       {Key? key,
-
-        required this.paid,
-        required this.unpaid,
-        required this.url,
-        required this.api,
-        required this.testMode, required this.returnLink, required this.payID})
+      required this.paid,
+      required this.unpaid,
+      required this.url,
+      required this.api,
+      required this.testMode,
+      required this.returnLink,
+      required this.payID})
       : super(key: key);
 
   final String url;
@@ -32,9 +32,9 @@ class _PaySavedWidgetState extends State<PaySavedWidget> {
   bool open = true;
   bool paid = false;
   bool dataSent = false;
-  bool showLoading=false;
+  bool showLoading = false;
   late Map<String, dynamic> dataBack;
-  PaymentIntentViewModel pay=PaymentIntentViewModel();
+  PaymentIntentViewModel pay = PaymentIntentViewModel();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,20 +52,26 @@ class _PaySavedWidgetState extends State<PaySavedWidget> {
                     onPageFinished: (String url) {},
                     onWebResourceError: (WebResourceError error) {},
                     onNavigationRequest: (NavigationRequest request) async {
-
-                      if(request.url ==widget.returnLink){
+                      if (request.url == widget.returnLink) {
                         setState(() {
-                          showLoading=true;
+                          showLoading = true;
                         });
-                        pay.check(id: widget.payID, apiKey: widget.api, testMode: widget.testMode, onDone: (data){
-                          if(data.data!.status=="succeeded"){
-                            Navigator.pop(context);
-                           widget.paid(StatusClass.fromJson(data.data!.toJson()));
-                          }else{
-                            Navigator.pop(context);
-                            widget.unpaid(StatusClass.fromJson(data.data!.toJson()));
-                          }
-                        }, onError: (d){});
+                        pay.check(
+                            id: widget.payID,
+                            apiKey: widget.api,
+                            testMode: widget.testMode,
+                            onDone: (data) {
+                              if (data.data!.status == "succeeded") {
+                                Navigator.pop(context);
+                                widget.paid(
+                                    StatusClass.fromJson(data.data!.toJson()));
+                              } else {
+                                Navigator.pop(context);
+                                widget.unpaid(
+                                    StatusClass.fromJson(data.data!.toJson()));
+                              }
+                            },
+                            onError: (d) {});
                       }
 
                       return NavigationDecision.navigate;
@@ -74,14 +80,14 @@ class _PaySavedWidgetState extends State<PaySavedWidget> {
                 )
                 ..loadRequest(Uri.parse(widget.url)),
             ),
-
-         if(showLoading)   Container(
-              alignment: Alignment.center,
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              color:Theme.of(context).scaffoldBackgroundColor,
-              child: CircularProgressIndicator(),
-            )
+            if (showLoading)
+              Container(
+                alignment: Alignment.center,
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                color: Theme.of(context).scaffoldBackgroundColor,
+                child: const CircularProgressIndicator(),
+              )
           ],
         ),
       ),

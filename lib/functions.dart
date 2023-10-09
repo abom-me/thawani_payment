@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thawani_payment/models/create_customers.dart';
 import 'package:thawani_payment/models/saveed_cards_model.dart';
+import 'package:thawani_payment/viewmodel/keys_viewmodel.dart';
 import 'package:thawani_payment/viewmodel/thawani_cards.dart';
 import 'package:thawani_payment/viewmodel/thawani_customer.dart';
 import 'package:thawani_payment/widgets/pay.dart';
@@ -67,7 +68,7 @@ class Thawani {
   /// storing Any Data about your products, customers(users)
   ///
   /// EX:
-  /// { "userName":"Nasr Al-Rahbi", "Twitter":"abom_me"}
+  /// ```{ "userName":"Nasr Al-Rahbi", "Twitter":"abom_me"}```
   final Map<String, dynamic>? metadata;
 
   /// Make It true If You Want Test The Package Or The Api
@@ -87,19 +88,34 @@ class Thawani {
   final void Function(StatusClass payStatus) onPaid;
 
   ///The Function And The Reason Of The Error,  If Any Error Happen.
-  final Function(Map error)? onError;
+  final void Function(Map error)? onError;
 
   /// Make It true If you want allow the customer to save the payment card
   final bool saveCard;
 
   /// This function show you the Customer Data if it's a new Customer
-  final Function(CreateCustomerModel data)? onCreateCustomer;
+  final void Function(CreateCustomerModel data)? onCreateCustomer;
+
+  /// This function show you the Saved Customer ID if it's a exist Customer
+  void Function(String data)? getSavedCustomer;
 
   /// This function show you the Customer Data if it's a new Customer
-  final Function(List<CardData> data)? savedCards;
-  final bool? showSavedCards;
+  final void Function(List<CardData> data)? savedCards;
 
-  // Thawani({required this.n});
+  /// To change the saved card background color it's shown if [saveCard] is true only
+  final Color? savedCardBackground;
+
+  /// To change the saved card Text color it's shown if [saveCard] is true only
+  final Color? savedCardTextColor;
+
+  /// To change the appbar in saved cards screen it's shown if [saveCard] is true only
+  final Widget? savedCardsAppBarText;
+
+  /// This text show when the user try to delete saved card from  saved cards screen it's shown if [saveCard] is true only
+  final String? deleteText;
+
+  /// This text show when the user faced Error in  delete saved card from  saved cards screen it's shown if [saveCard] is true only
+  final String? deleteTextError;
 
   Thawani.pay(BuildContext context,
       {required this.api,
@@ -116,51 +132,114 @@ class Thawani {
       required this.saveCard,
       this.onError,
       this.onCreateCustomer,
-      this.showSavedCards,
+      this.savedCardBackground,
+      this.savedCardTextColor,
+      this.savedCardsAppBarText,
+      this.getSavedCustomer,
+      this.deleteTextError,
+      this.deleteText,
       this.savedCards,
       this.successUrl,
       this.cancelUrl}) {
+    // ThawaniKeys k=ThawaniKeys();
+    userApiKey = api;
+    userClintID = clintID;
+    userMetadata = metadata;
+    userPKey = pKey;
+    userProducts = products;
+    isTestMode = testMode ?? false;
+    userSuccessUrl = successUrl;
+    userCancelUrl = cancelUrl;
+    userSavedCardBackground = savedCardBackground ?? const Color(0xff0d0d10);
+    userSavedCardTextColor = savedCardTextColor ?? const Color(0xffffffff);
+    userSavedCardsAppBar = savedCardsAppBarText ?? const Text("Saved Cards");
+    userDeleteLoading = deleteText ?? "Deleting...";
+    userDeleteError = deleteTextError ?? "Error, Can't delete this card";
+
     ThawaniCustomer().checker(
         testMode: testMode ?? false,
         apiKey: api,
         customerId: clintID,
         onError: (error) {},
         onDone: (id, clint) {
+          getSavedCustomer!(id);
+          userCustomerID = id;
+          if (saveCard) {
+            ThawaniCards().get(
+                testMode: testMode ?? false,
+                customerId: id,
+                apiKey: api,
+                onError: (error) {},
+                onDone: (data) {
+                  if (data.data!.isEmpty) {
+                    payApi(
+                        context: context,
+                        api: api,
+                        publishKey: pKey,
+                        clintID: clintID,
+                        products: products,
+                        onCreate: onCreate,
+                        onCancelled: onCancelled,
+                        onPaid: onPaid,
+                        onError: onError,
+                        customerID: id);
+                  } else {
+                    savedCards!(data.data!);
 
-          ThawaniCards().get(
-              testMode: testMode ?? false,
-              customerId: id,
-              apiKey: api,
-              onError: (error) {},
-              onDone: (data) {
-                if(data.data!.isEmpty){
-                  pay(context: context, api: api, publishKey: pKey, clintID: clintID, products: products, onCreate: onCreate, onCancelled: onCancelled, onPaid: onPaid, onError: onError, customerID: id);
-                }else{
+                    int totalAmount = 0;
 
-savedCards!(data.data!);
+                    for (var product in products) {
+                      totalAmount +=
+                          int.parse(product["unit_amount"].toString());
+                    }
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SavedCardsScreen(
+                                  saved: data,
+                                  apiKey: api,
+                                  amount: totalAmount,
+                                  returnLink: successUrl ??
+                                      'https://abom.me/package/thawani/suc.php',
+                                  testMode: testMode ?? false,
+                                  metadata: metadata,
+                                  onCancelledCard: (StatusClass payStatus) {
+                                    Navigator.pop(context);
 
-
-int totalAmount = 0;
-
-for (var product in products) {
-  totalAmount += int.parse(product["unit_amount"].toString());
-}
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SavedCardsScreen(saved: data, apiKey: api, amount: totalAmount, returnLink:    successUrl ?? 'https://abom.me/package/thawani/suc.php', testMode: testMode??false,metadata: metadata, onCancelled: (StatusClass payStatus) { onCancelled(payStatus); }, onPaid: (StatusClass payStatus) { onPaid(payStatus); },)));
-                }
-              });
+                                    onCancelled(payStatus);
+                                  },
+                                  onPaidCard: (StatusClass payStatus) {
+                                    Navigator.pop(context);
+                                    onPaid(payStatus);
+                                  },
+                                  onCreateCard: (Create data) {
+                                    onCreate(data);
+                                  },
+                                )));
+                  }
+                });
+          } else {
+            payApi(
+                context: context,
+                api: api,
+                publishKey: pKey,
+                clintID: clintID,
+                products: products,
+                onCreate: onCreate,
+                onCancelled: onCancelled,
+                onPaid: onPaid,
+                onError: onError,
+                customerID: id);
+          }
         },
         newCustomer: (CreateCustomerModel userData) async {
           SharedPreferences share = await SharedPreferences.getInstance();
           share.setString("customerId", userData.data!.id!);
           if (userData.data != null) onCreateCustomer!(userData);
         });
-    // pay(context: context, api: api, publishKey: pKey, clintID: clintID, products: products, onCreate: onCreate, onCancelled: onCancelled, onPaid: onPaid, onError: onError);
   }
 
-  pay({
+  payApi({
     required BuildContext context,
     required String api,
     required String publishKey,
@@ -195,8 +274,8 @@ for (var product in products) {
     dataBack = await RequestHelper.postRequest(
         api,
         {
-          "customer_id":customerID,
-          "save_card_on_success":saveCard,
+          "customer_id": customerID,
+          "save_card_on_success": saveCard,
           "client_reference_id": clintID,
           "mode": "payment",
           "products": products,
@@ -206,7 +285,7 @@ for (var product in products) {
           if (metadata != null) "metadata": metadata,
         },
         testMode);
-    print(dataBack);
+    // print(dataBack);
     if (dataBack['code'] == 2004) {
       createS().then((value) => {onCreate(value)});
       Navigator.push(

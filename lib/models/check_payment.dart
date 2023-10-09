@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-CheckPaymentModel checkPaymentModelFromJson(String str) => CheckPaymentModel.fromJson(json.decode(str));
+CheckPaymentModel checkPaymentModelFromJson(String str) =>
+    CheckPaymentModel.fromJson(json.decode(str));
 
-String checkPaymentModelToJson(CheckPaymentModel data) => json.encode(data.toJson());
+String checkPaymentModelToJson(CheckPaymentModel data) =>
+    json.encode(data.toJson());
 
 class CheckPaymentModel {
   bool? success;
@@ -34,19 +36,20 @@ class CheckPaymentModel {
         data: data ?? this.data,
       );
 
-  factory CheckPaymentModel.fromJson(Map<String, dynamic> json) => CheckPaymentModel(
-    success: json["success"],
-    code: json["code"],
-    description: json["description"],
-    data: json["data"] == null ? null : Data.fromJson(json["data"]),
-  );
+  factory CheckPaymentModel.fromJson(Map<String, dynamic> json) =>
+      CheckPaymentModel(
+        success: json["success"],
+        code: json["code"],
+        description: json["description"],
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "success": success,
-    "code": code,
-    "description": description,
-    "data": data?.toJson(),
-  };
+        "success": success,
+        "code": code,
+        "description": description,
+        "data": data?.toJson(),
+      };
 }
 
 class Data {
@@ -57,7 +60,7 @@ class Data {
   String? paymentMethod;
   NextAction? nextAction;
   String? status;
-  Map<String,dynamic>? metadata;
+  Map<String, dynamic>? metadata;
   DateTime? createdAt;
   DateTime? expireAt;
 
@@ -82,7 +85,7 @@ class Data {
     String? paymentMethod,
     NextAction? nextAction,
     String? status,
-    Map<String,dynamic>? metadata,
+    Map<String, dynamic>? metadata,
     DateTime? createdAt,
     DateTime? expireAt,
   }) =>
@@ -100,59 +103,63 @@ class Data {
       );
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    id: json["id"],
-    clientReferenceId: json["client_reference_id"],
-    amount: json["amount"],
-    currency: json["currency"],
-    paymentMethod: json["payment_method"],
-    nextAction: json["next_action"] == null ? null : NextAction.fromJson(json["next_action"]),
-    status: json["status"],
-    metadata: json["metadata"],
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    expireAt: json["expire_at"] == null ? null : DateTime.parse(json["expire_at"]),
-  );
+        id: json["id"],
+        clientReferenceId: json["client_reference_id"],
+        amount: json["amount"],
+        currency: json["currency"],
+        paymentMethod: json["payment_method"],
+        nextAction: json["next_action"] == null
+            ? null
+            : NextAction.fromJson(json["next_action"]),
+        status: json["status"],
+        metadata: json["metadata"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        expireAt: json["expire_at"] == null
+            ? null
+            : DateTime.parse(json["expire_at"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "client_reference_id": clientReferenceId,
-    "amount": amount,
-    "currency": currency,
-    "payment_method": paymentMethod,
-    "next_action": nextAction?.toJson(),
-    "status": status,
-    "metadata": metadata,
-    "created_at": createdAt?.toIso8601String(),
-    "expire_at": expireAt?.toIso8601String(),
-  };
+        "id": id,
+        "client_reference_id": clientReferenceId,
+        "amount": amount,
+        "currency": currency,
+        "payment_method": paymentMethod,
+        "next_action": nextAction?.toJson(),
+        "status": status,
+        "metadata": metadata,
+        "created_at": createdAt?.toIso8601String(),
+        "expire_at": expireAt?.toIso8601String(),
+      };
 }
 
-
-
 class NextAction {
-String? url;
-String? returnUrl;
+  String? url;
+  String? returnUrl;
 
-NextAction({
-this.url,
-this.returnUrl,
-});
+  NextAction({
+    this.url,
+    this.returnUrl,
+  });
 
-NextAction copyWith({
-String? url,
-String? returnUrl,
-}) =>
-NextAction(
-url: url ?? this.url,
-returnUrl: returnUrl ?? this.returnUrl,
-);
+  NextAction copyWith({
+    String? url,
+    String? returnUrl,
+  }) =>
+      NextAction(
+        url: url ?? this.url,
+        returnUrl: returnUrl ?? this.returnUrl,
+      );
 
-factory NextAction.fromJson(Map<String, dynamic> json) => NextAction(
-url: json["url"],
-returnUrl: json["return_url"],
-);
+  factory NextAction.fromJson(Map<String, dynamic> json) => NextAction(
+        url: json["url"],
+        returnUrl: json["return_url"],
+      );
 
-Map<String, dynamic> toJson() => {
-"url": url,
-"return_url": returnUrl,
-};
+  Map<String, dynamic> toJson() => {
+        "url": url,
+        "return_url": returnUrl,
+      };
 }

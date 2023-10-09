@@ -47,19 +47,16 @@ class _PayWidgetState extends State<PayWidget> {
                 onNavigationRequest: (NavigationRequest request) async {
                   var dataBack = await RequestHelper.getRequest(
                       widget.uri, widget.api, widget.testMode);
+
                   if (dataBack['data']['payment_status'] == "paid" &&
                       request.url == dataBack['data']['success_url']) {
+                    if (context.mounted) Navigator.pop(context);
                     widget.paid(dataBack);
-
-                    if (!mounted) return widget.paid(dataBack);
-                    Navigator.pop(context);
                   } else if (dataBack['data']['payment_status'] ==
                           "cancelled" &&
                       request.url == dataBack['data']['cancel_url']) {
+                    if (context.mounted) Navigator.pop(context);
                     widget.unpaid(dataBack);
-
-                    if (!mounted) return widget.unpaid(dataBack);
-                    Navigator.pop(context);
                   }
 
                   return NavigationDecision.navigate;

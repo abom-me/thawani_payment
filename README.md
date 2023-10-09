@@ -43,23 +43,7 @@ Pubspec changes:
       dependencies:
         thawani_payment: <last_verison>
 ```
-Sample example to add pay button :
 
-```dart
-import 'package:thawani_payment/thawani_payment.dart';
-
-ThawaniPayBtn(
-  api: 'API Key',
-          pKey: 'Publishable Key',
-          clintID: 'String',
-          onError: (e){},
-          products:[],
-          onCreate: (v) {},
-          onCancelled: (v){},
-          onPaid: (v){}, 
-          );
-```
------
 
 
 Sample example to add pay function :
@@ -67,16 +51,37 @@ Sample example to add pay function :
 ```dart
 import 'package:thawani_payment/thawani_payment.dart';
 
-Thawani.pay(
-  api: 'API Key',
-          pKey: 'Publishable Key',
-          clintID: 'String',
-          onError: (e){},
-          products:[],
-          onCreate: (v) {},
-          onCancelled: (v){},
-          onPaid: (v){}, 
-          );
+ElevatedButton(
+onPressed: (){
+Thawani.pay(context,
+saveCard: true,
+testMode: true,
+
+api: 'rRQ26GcsZzoEhbrP2HZvLYDbn9C9et',
+pKey: 'HGvTMLDssJghr9tlN9gr4DVYt0qyBy',
+clintID: '12345',
+onError: (e) {
+print(e);
+},
+products: const [
+{"name": "product 1", "quantity": 1, "unit_amount": 1000},
+{"name": "product 2", "quantity": 1, "unit_amount": 200}
+],
+onCreate: (v) {
+
+},
+onCancelled: (v) {
+print("Cancelled");
+},
+savedCards: (d){
+
+},
+onPaid: (v) {
+print("Paid");
+}, );
+},
+child: const Text("Pay Using Thawani"),
+)
 ```
 
 ## Getting Started
@@ -203,6 +208,33 @@ See the `example` directory for a complete sample app.
   ///The Function And The Reason Of The Error,  If Any Error Happen.
   
   final  Function(Map error)? onError;
+
+
+  /// Make It true If you want allow the customer to save the payment card
+  final bool saveCard;
+
+  /// This function show you the Customer Data if it's a new Customer
+  final void Function(CreateCustomerModel data)? onCreateCustomer;
+
+  /// This function show you the Saved Customer ID if it's a exist Customer
+  void Function(String data)? getSavedCustomer;
+
+  /// This function show you the Customer Data if it's a new Customer
+  final void Function(List<CardData> data)? savedCards;
+
+  /// To change the saved card background color it's shown if [saveCard] is true only
+  final Color? savedCardBackground;
+  /// To change the saved card Text color it's shown if [saveCard] is true only
+  final Color? savedCardTextColor;
+
+  /// To change the appbar in saved cards screen it's shown if [saveCard] is true only
+  final Widget? savedCardsAppBarText;
+
+  /// This text show when the user try to delete saved card from  saved cards screen it's shown if [saveCard] is true only
+  final String? deleteText;
+
+  /// This text show when the user faced Error in  delete saved card from  saved cards screen it's shown if [saveCard] is true only
+  final String? deleteTextError;
 
 ```
 ## Real Example:
