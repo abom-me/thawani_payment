@@ -62,3 +62,34 @@
 * and more...
 
 
+* ## 1.1.1
+* Delete `ThawaniPayBtn` replace it with `Thawani.pay`.
+* Add function `Thawani.pay` to can pay.
+* Add `bool saveCards` to you can save the customer cards.
+* Add `onCreateCustomer` to you can get the customer Id after create it.
+* Add auto save for the customer id in the local storage
+* Add a new screen to show he saved card
+* Add `savedCardBackground` to change the background color of the cards.
+* Add `savedCardTextColor` to change the text color of the cards.
+* and more...
+
+
+* ## 1.1.2
+* Delete `ThawaniPayBtn` replace it with `Thawani.pay`.
+* Add function `Thawani.pay` to can pay.
+* Add `bool saveCards` to you can save the customer cards.
+* Add `onCreateCustomer` to you can get the customer Id after create it.
+* Add auto save for the customer id in the local storage
+* Add a new screen to show he saved card
+* Add `savedCardBackground` to change the background color of the cards.
+* Add `savedCardTextColor` to change the text color of the cards.
+* and more...
+
+
+* ## 1.2.0
+* Add `ThawaniCustomer.add()` to save new Customer ID.
+* Add `ThawaniCustomer.get()` to get saved Customer ID.
+* Add `ThawaniCustomer.delete()` to delete saved Customer ID.
+* Add `customerID` to send Custom Customer ID.
+* fix bug creating multi payment sessions in the first payment.
+

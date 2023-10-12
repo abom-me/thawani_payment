@@ -84,6 +84,23 @@ child: const Text("Pay Using Thawani"),
 )
 ```
 
+To add new Customer ID use :
+```dart
+await ThawaniCustomer.add( customerID:"{set customer id (cus_******)}");
+//  will return true
+```
+
+To get Saved Customer ID use :
+```dart
+await ThawaniCustomer.get();
+//  will return Customer ID (cus_******)
+```
+To Delete Saved Customer ID use : 
+```dart
+await ThawaniCustomer.delete();
+//  will return true
+```
+
 ## Getting Started
 
 - The official  API Document From Thawani in <https://docs.thawani.om/>.

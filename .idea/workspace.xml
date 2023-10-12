@@ -5,33 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="11a198f4-56f2-4076-9f63-1d2f8388e353" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/helper/alerts.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/helper/sizes.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/viewmodel/keys_viewmodel.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/viewmodel/thawani_customerdelete.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/v.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/v.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/functions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/functions.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/helper/req_helper.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/helper/req_helper.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/helper/req_helper_new.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/helper/req_helper_new.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/check_payment.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/check_payment.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/conform_payment.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/conform_payment.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/create_customers.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/create_customers.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/create_payment.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/create_payment.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/customers.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/customers.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/saveed_cards_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/saveed_cards_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/functions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pay.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/thawani_payment.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/thawani_payment.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/viewmodel/keys_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/viewmodel/keys_viewmodel.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/viewmodel/thawani_cards.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/viewmodel/thawani_cards.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/viewmodel/thawani_customer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/viewmodel/thawani_customer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/viewmodel/thawani_paymentIntent.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/viewmodel/thawani_paymentIntent.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/widgets/pay.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/pay.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/widgets/pay_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/pay_button.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/widgets/saved_cards_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/saved_cards_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/widgets/saved_pay_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/saved_pay_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/thawani_payment.iml" beforeDir="false" afterPath="$PROJECT_DIR$/thawani_payment.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +120,8 @@
       <workItem from="1696320722925" duration="5000" />
       <workItem from="1696526716704" duration="23280000" />
       <workItem from="1696750544985" duration="15430000" />
-      <workItem from="1696851048753" duration="3952000" />
+      <workItem from="1696851048753" duration="15147000" />
+      <workItem from="1697099702374" duration="6018000" />
     </task>
     <servers />
   </component>
@@ -157,5 +144,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/pay.dart</url>
+          <line>124</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:thawani_payment/helper/req_helper_new.dart';
 import 'package:thawani_payment/viewmodel/keys_viewmodel.dart';
 
-import '../models/create.dart';
-import '../models/saveed_cards_model.dart';
-import '../models/status.dart';
-import '../widgets/pay.dart';
+import 'package:thawani_payment/models/create.dart';
+import 'package:thawani_payment/models/saveed_cards_model.dart';
+import 'package:thawani_payment/widgets/pay.dart';
 
 class ThawaniCards {
   get({
@@ -52,10 +51,10 @@ class ThawaniCards {
     required void Function(Create create) onCreate,
 
     ///The Function And The Result Of Data If The User  Cancelled The Payment.
-    required void Function(StatusClass payStatus) onCancelled,
+    required void Function(Map<String, dynamic> payStatus) onCancelled,
 
     ///The Function And The Result Of Data If The User  Cancelled The Payment.
-    required void Function(StatusClass payStatus) onPaid,
+    required void Function(Map<String, dynamic> payStatus) onPaid,
 
     ///The Function And The Reason Of The Error,  If Any Error Happen.
     required void Function(Map error)? onError,
@@ -90,10 +89,10 @@ class ThawaniCards {
                                 ? 'https://uatcheckout.thawani.om/pay/${value['data']['data']['session_id']}?key=$userPKey'
                                 : 'https://checkout.thawani.om/pay/${value['data']['data']['session_id']}?key=$userPKey',
                             paid: (statusClass) {
-                              onPaid(StatusClass.fromJson(statusClass));
+                              onPaid(statusClass);
                             },
                             unpaid: (statusClass) {
-                              onCancelled(StatusClass.fromJson(statusClass));
+                              onCancelled(statusClass);
                             },
                             testMode: isTestMode,
                           ))),

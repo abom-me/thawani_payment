@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_payment/functions.dart';
+import 'package:thawani_payment/pay.dart';
+import 'package:thawani_payment/viewmodel/thawani_customerdelete.dart';
 
 import 'v.dart';
 
@@ -94,7 +95,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   Thawani.pay(
                     context,
-                    getSavedCustomer: (id) {},
+                    // customerID: "dd",
+                    getSavedCustomer: (id) {
+                      print(id);
+                    },
                     onCreateCustomer: (data) {},
                     testMode: true,
                     api: 'rRQ26GcsZzoEhbrP2HZvLYDbn9C9et',
@@ -108,14 +112,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       {"name": "product 2", "quantity": 1, "unit_amount": 200}
                     ],
                     onCreate: (v) {
-                      // print(create as Map);
+                      print(v.data);
                     },
                     onCancelled: (v) {
+                      print(v);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (builder) => const C()));
                     },
                     savedCards: (d) {},
                     onPaid: (v) {
+                      print(v);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (builder) => const V()));
                     },
@@ -125,6 +131,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: const Text("Pay Using Thawani"),
               ),
             ),
+            const SizedBox(
+              height: 50,
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                print(await ThawaniCustomer.get());
+              },
+              child: const Text("Get Saved Customer ID"),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                print(ThawaniCustomer.delete());
+              },
+              child: const Text("Delete Saved Customer ID"),
+            )
           ],
         ),
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_payment/models/status.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../viewmodel/thawani_paymentIntent.dart';
@@ -20,9 +19,9 @@ class PaySavedWidget extends StatefulWidget {
   final String returnLink;
   final String api;
   final String payID;
-  final void Function(StatusClass data) paid;
+  final void Function(Map<String, dynamic> data) paid;
   final bool testMode;
-  final void Function(StatusClass data) unpaid;
+  final void Function(Map<String, dynamic> data) unpaid;
 
   @override
   State<PaySavedWidget> createState() => _PaySavedWidgetState();
@@ -62,13 +61,12 @@ class _PaySavedWidgetState extends State<PaySavedWidget> {
                             testMode: widget.testMode,
                             onDone: (data) {
                               if (data.data!.status == "succeeded") {
+                                print(data.data!.clientReferenceId!);
                                 Navigator.pop(context);
-                                widget.paid(
-                                    StatusClass.fromJson(data.data!.toJson()));
+                                widget.paid(data.data!.toJson());
                               } else {
                                 Navigator.pop(context);
-                                widget.unpaid(
-                                    StatusClass.fromJson(data.data!.toJson()));
+                                widget.unpaid(data.data!.toJson());
                               }
                             },
                             onError: (d) {});
