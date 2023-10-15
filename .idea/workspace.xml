@@ -5,16 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="11a198f4-56f2-4076-9f63-1d2f8388e353" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/viewmodel/thawani_customerdelete.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/CHANGELOG.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/functions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pay.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/thawani_payment.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/thawani_payment.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pay.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pay.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/viewmodel/keys_viewmodel.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/viewmodel/keys_viewmodel.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/viewmodel/thawani_cards.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/viewmodel/thawani_cards.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/viewmodel/thawani_customer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/viewmodel/thawani_customer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/viewmodel/thawani_paymentIntent.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/viewmodel/thawani_paymentIntent.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/widgets/saved_cards_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/saved_cards_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/widgets/saved_pay_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/saved_pay_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
@@ -121,7 +116,7 @@
       <workItem from="1696526716704" duration="23280000" />
       <workItem from="1696750544985" duration="15430000" />
       <workItem from="1696851048753" duration="15147000" />
-      <workItem from="1697099702374" duration="6018000" />
+      <workItem from="1697099702374" duration="10177000" />
     </task>
     <servers />
   </component>

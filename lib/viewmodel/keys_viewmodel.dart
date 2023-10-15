@@ -5,6 +5,7 @@ String? userDeleteLoading;
 String? userDeleteError;
 Widget? userSavedCardsAppBar;
 late String userPKey;
+late bool userSaveCard;
 late String? userSuccessUrl;
 late String? userCancelUrl;
 late String userClintID;

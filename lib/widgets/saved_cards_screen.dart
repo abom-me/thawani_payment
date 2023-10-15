@@ -72,9 +72,7 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
                     widget.onCancelledCard(data);
                   }, onPaid: (data) {
                     widget.onPaidCard(data);
-                  }, onError: (data) {
-                    print(data);
-                  });
+                  }, onError: (data) {});
                 },
                 icon: const Icon(Icons.add_card))
           ],

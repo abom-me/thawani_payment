@@ -1,8 +1,7 @@
-import 'package:thawani_payment/helper/req_helper_new.dart';
-import 'package:thawani_payment/models/conform_payment.dart';
-import 'package:thawani_payment/models/create_payment.dart';
-
+import '../helper/req_helper_new.dart';
 import '../models/check_payment.dart';
+import '../models/conform_payment.dart';
+import '../models/create_payment.dart';
 
 class PaymentIntentViewModel {
   create(apiKey,

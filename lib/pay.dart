@@ -163,10 +163,11 @@ class Thawani {
     userDeleteLoading = deleteText ?? "Deleting...";
     userSelectCardLoading = selectCardText ?? "Loading...";
     userDeleteError = deleteTextError ?? "Error, Can't delete this card";
+    userSaveCard = saveCard;
 
     ThawaniCustomers().checker(
         customer: customerID,
-        testMode: testMode ?? false,
+        testMode: isTestMode,
         apiKey: api,
         customerId: clintID,
         onError: (error) {},
@@ -175,7 +176,7 @@ class Thawani {
           userCustomerID = id;
           if (saveCard) {
             ThawaniCards().get(
-                testMode: testMode ?? false,
+                testMode: isTestMode,
                 customerId: id,
                 apiKey: api,
                 onError: (error) {},
@@ -191,7 +192,8 @@ class Thawani {
                         onCancelled: onCancelled,
                         onPaid: onPaid,
                         onError: onError,
-                        customerID: id);
+                        customerID: id,
+                        testMode: isTestMode);
                   } else {
                     savedCards?.call(data.data!);
 
@@ -210,7 +212,7 @@ class Thawani {
                                   amount: totalAmount,
                                   returnLink: successUrl ??
                                       'https://abom.me/package/thawani/suc.php',
-                                  testMode: testMode ?? false,
+                                  testMode: isTestMode,
                                   metadata: metadata,
                                   onCancelledCard:
                                       (Map<String, dynamic> payStatus) {
@@ -239,7 +241,8 @@ class Thawani {
                 onCancelled: onCancelled,
                 onPaid: onPaid,
                 onError: onError,
-                customerID: id);
+                customerID: id,
+                testMode: isTestMode);
           }
         },
         newCustomer: (CreateCustomerModel userData) async {
@@ -259,7 +262,7 @@ class Thawani {
     String? successUrl,
     String? cancelUrl,
     Map<String, dynamic>? metadata,
-    bool testMode = true,
+    required bool testMode,
     required void Function(Create create) onCreate,
 
     ///The Function And The Result Of Data If The User  Cancelled The Payment.
@@ -284,7 +287,7 @@ class Thawani {
     dataBack = await RequestHelper.postRequest(
         api,
         {
-          "customer_id": customerID,
+          if (userSaveCard) "customer_id": customerID,
           "save_card_on_success": saveCard,
           "client_reference_id": clintID,
           "mode": "payment",

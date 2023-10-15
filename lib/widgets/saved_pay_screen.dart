@@ -61,7 +61,6 @@ class _PaySavedWidgetState extends State<PaySavedWidget> {
                             testMode: widget.testMode,
                             onDone: (data) {
                               if (data.data!.status == "succeeded") {
-                                print(data.data!.clientReferenceId!);
                                 Navigator.pop(context);
                                 widget.paid(data.data!.toJson());
                               } else {

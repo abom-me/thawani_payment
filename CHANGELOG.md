@@ -93,3 +93,7 @@
 * Add `customerID` to send Custom Customer ID.
 * fix bug creating multi payment sessions in the first payment.
 
+
+* ## 1.2.1
+* Fix Test Mode issue 
+
