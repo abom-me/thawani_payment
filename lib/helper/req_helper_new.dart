@@ -41,6 +41,7 @@ class Request {
     String data2 = response.body;
     var decodeData = jsonDecode(data2);
     return {'status': response.statusCode, 'data': decodeData};
+
   }
 
   static Future delete({

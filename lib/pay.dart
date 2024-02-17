@@ -170,7 +170,10 @@ class Thawani {
         testMode: isTestMode,
         apiKey: api,
         customerId: clintID,
-        onError: (error) {},
+        onError: (error) {
+          onError?.call(error);
+       
+        },
         onDone: (id, clint) {
           getSavedCustomer?.call(id);
           userCustomerID = id;
@@ -179,7 +182,9 @@ class Thawani {
                 testMode: isTestMode,
                 customerId: id,
                 apiKey: api,
-                onError: (error) {},
+                onError: (error) {
+                 onError?.call(error);
+                },
                 onDone: (data) {
                   if (data.data!.isEmpty) {
                     payApi(

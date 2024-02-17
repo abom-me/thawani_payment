@@ -23,8 +23,13 @@ class ThawaniCards {
       'thawani-api-key': apiKey
     }).then((value) {
       if (value['code'] == 2000) {
+
         onDone(SavedCardsModel.fromJson(value));
-      } else {
+      } else if(value['code'] ==4003) {
+        onDone(SavedCardsModel.fromJson(value));
+
+      }else {
+
         onError(value);
       }
     });
