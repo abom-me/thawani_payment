@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_payment/models/products.dart';
 
 late String userApiKey;
 String? userDeleteLoading;
@@ -12,8 +13,8 @@ late String userClintID;
 late String userCustomerID;
 late String userSelectCardLoading;
 bool isTestMode = false;
-late List<Map<String, dynamic>> userProducts;
-late Map<String, dynamic>? userMetadata;
+late List<Product> userProducts;
+late Map<String, dynamic> userMetadata;
 
 Color? userSavedCardBackground;
 Color? userSavedCardTextColor;

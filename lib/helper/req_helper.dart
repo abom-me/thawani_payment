@@ -39,7 +39,6 @@ class RequestHelper {
       if (response.statusCode == 200) {
         String data = response.body;
         var decodeData = jsonDecode(data);
-        // print(decodeData);
         return decodeData;
       } else {
         var data = response.body;
@@ -48,7 +47,8 @@ class RequestHelper {
         return decodeData;
       }
     } catch (e) {
-      return 'failed';
+      print(e.toString());
+      return {'status': 500, 'message': 'failed'};
     }
   }
 }

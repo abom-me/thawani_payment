@@ -5,14 +5,13 @@ import '../helper/req_helper.dart';
 
 class PayWidget extends StatefulWidget {
   const PayWidget(
-      {Key? key,
+      {super.key,
       required this.uri,
       required this.paid,
       required this.unpaid,
       required this.url,
       required this.api,
-      required this.testMode})
-      : super(key: key);
+      required this.testMode});
   final String uri;
   final String url;
   final String api;

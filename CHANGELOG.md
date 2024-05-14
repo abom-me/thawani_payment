@@ -97,3 +97,15 @@
 * ## 1.2.1
 * Fix Test Mode issue 
 
+* ## 1.2.2
+* Fix Add New Card Issue
+
+
+* ## 1.2.3
+  * (**Fix**) issue of can't pay with the new card
+  * (**New**) Now The metadata is required (this changes from thawani)
+  * (**New**) Now to add product you should use `Product(name,quantityunitAmount)` instead of `{
+    "name": "product 1", "quantity": 1,"unit_amount": 100 }`
+  * (**Update**) Update errors handling
+
+

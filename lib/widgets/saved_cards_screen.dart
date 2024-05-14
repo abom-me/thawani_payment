@@ -18,7 +18,7 @@ class SavedCardsScreen extends StatefulWidget {
       required this.amount,
       required this.returnLink,
       required this.testMode,
-      this.metadata,
+        required this.metadata,
       required this.onCancelledCard,
       required this.onPaidCard,
       required this.onCreateCard});
@@ -37,7 +37,7 @@ class SavedCardsScreen extends StatefulWidget {
   ///The Function And The Result Of Data If The User  Cancelled The Payment.
   final void Function(Map<String, dynamic> payStatus) onPaidCard;
   final void Function(Create data) onCreateCard;
-  final Map<String, dynamic>? metadata;
+  final Map<String, dynamic> metadata;
 }
 
 class _SavedCardsScreenState extends State<SavedCardsScreen> {

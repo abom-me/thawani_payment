@@ -28,12 +28,9 @@
 <br>
 ### ⚠️ The Requirement ⚠️ :
 
-|             | Android | iOS    |
-| ----------- | ------- | ------ | 
-| **Support** | 	SDK 19+ or 20+ | iOS 9+ 
-
-
-
+|             | Android         | iOS    |
+|-------------|-----------------|--------| 
+| **Support** | 	SDK 19+ or 20+ | iOS 9+ |
 
 ## Setup:
 
@@ -103,7 +100,7 @@ await ThawaniCustomer.delete();
 
 ## Getting Started
 
-- The official  API Document From Thawani in <https://docs.thawani.om/>.
+- The official API Document From Thawani in <https://docs.thawani.om/>.
 
 - **First You Should have Keys From Thawani**  [Thawani Checkout](https://thawani.om/checkout/)
 

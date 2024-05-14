@@ -7,9 +7,9 @@ import 'package:thawani_payment/viewmodel/thawani_cards.dart';
 import 'package:thawani_payment/viewmodel/thawani_customer.dart';
 import 'package:thawani_payment/widgets/pay.dart';
 import 'package:thawani_payment/widgets/saved_cards_screen.dart';
-
 import 'models/create.dart';
 import 'helper/req_helper.dart';
+import 'models/products.dart';
 
 class Thawani {
   ///  API Code From Thawani Company
@@ -52,15 +52,7 @@ class Thawani {
   final String? cancelUrl;
 
   /// A list of products the customer is purchasing. maximum  100 products (From Thawani API Doc).
-  ///
-  /// [
-  ///      {
-  ///        "name": "product Name",
-  ///         "unit_amount": the price by Baisa, >=100 <=5000000000
-  ///        "quantity": the quantity of the line product,  >=1 <=100
-  ///       }
-  ///     ]
-  final List<Map<String, dynamic>> products;
+  final List<Product> products;
 
   /// Useful for storing additional information about your products, customers (From Thawani API Doc).
   ///
@@ -68,7 +60,7 @@ class Thawani {
   ///
   /// EX:
   /// ```{ "userName":"Nasr Al-Rahbi", "Twitter":"abom_me"}```
-  final Map<String, dynamic>? metadata;
+  final Map<String, dynamic> metadata;
 
   /// Make It true If You Want Test The Package Or The Api
   ///
@@ -121,6 +113,8 @@ class Thawani {
 
   /// You can send Custom Customer ID to get the  user saved card
   final String? customerID;
+///to set custom expiry for a session. Default is 24 hours. Minimum 30 minutes and maximum 7 days (10080 minutes).
+  final int? expiredInMinuets;
 
   Thawani.pay(BuildContext context,
       {required this.api,
@@ -129,8 +123,9 @@ class Thawani {
       required this.onCancelled,
       required this.onPaid,
       this.child,
+        this.expiredInMinuets,
       required this.pKey,
-      this.metadata,
+        required  this.metadata,
       required this.clintID,
       this.buttonStyle,
       this.testMode,
@@ -166,21 +161,29 @@ class Thawani {
     userSaveCard = saveCard;
 
     ThawaniCustomers().checker(
+      // customerID: customerID,
         customer: customerID,
         testMode: isTestMode,
         apiKey: api,
         customerId: clintID,
+        // function to get the error
         onError: (error) {
           onError?.call(error);
        
         },
+        // function to get the customer id
         onDone: (id, clint) {
+          // function to get the customer id
           getSavedCustomer?.call(id);
           userCustomerID = id;
           if (saveCard) {
+            // get the saved cards
             ThawaniCards().get(
+              // customer id
                 testMode: isTestMode,
+                // api key
                 customerId: id,
+
                 apiKey: api,
                 onError: (error) {
                  onError?.call(error);
@@ -190,6 +193,7 @@ class Thawani {
                     payApi(
                         context: context,
                         api: api,
+                        metadata: userMetadata,
                         publishKey: pKey,
                         clintID: clintID,
                         products: products,
@@ -203,11 +207,13 @@ class Thawani {
                     savedCards?.call(data.data!);
 
                     int totalAmount = 0;
-
+// get the total amount of the products
                     for (var product in products) {
                       totalAmount +=
-                          int.parse(product["unit_amount"].toString());
+                          int.parse(product.unitAmount.toString()) *
+                              product.quantity;
                     }
+                    // show the saved cards screen
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -236,9 +242,11 @@ class Thawani {
                   }
                 });
           } else {
+            // if the user don't want to save the card
             payApi(
                 context: context,
                 api: api,
+                metadata: userMetadata,
                 publishKey: pKey,
                 clintID: clintID,
                 products: products,
@@ -263,10 +271,10 @@ class Thawani {
     required String publishKey,
     required String clintID,
     required String customerID,
-    required List<Map<String, dynamic>> products,
+    required List<Product> products,
     String? successUrl,
     String? cancelUrl,
-    Map<String, dynamic>? metadata,
+    required Map<String, dynamic> metadata,
     required bool testMode,
     required void Function(Create create) onCreate,
 
@@ -294,16 +302,16 @@ class Thawani {
         {
           if (userSaveCard) "customer_id": customerID,
           "save_card_on_success": saveCard,
+          if (expiredInMinuets !=null) "expired_in_minutes": expiredInMinuets,
           "client_reference_id": clintID,
           "mode": "payment",
-          "products": products,
+          "products": products.map((e) => e.toJson()).toList(),
           "success_url":
               successUrl ?? 'https://abom.me/package/thawani/suc.php',
           "cancel_url": cancelUrl ?? "https://abom.me/package/thawani/can.php",
-          if (metadata != null) "metadata": metadata,
+         "metadata": metadata,
         },
         testMode);
-    // print(dataBack);
     if (dataBack['code'] == 2004) {
       createS().then((value) => {onCreate(value)});
       if (context.mounted) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_payment/models/products.dart';
 import 'package:thawani_payment/pay.dart';
 import 'package:thawani_payment/viewmodel/thawani_customerdelete.dart';
 
@@ -96,6 +97,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   Thawani.pay(
                     context,
                     // customerID: "dd",
+                    metadata: {
+                      "order_id": "123",
+                      "customer_id": "123",
+                      "customer_name": "John Doe",
+                      "customer_email": "s"
+                    },
                     getSavedCustomer: (id) {
                       print(id);
                     },
@@ -107,9 +114,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     onError: (e) {
                       print(e);
                     },
-                    products: const [
-                      {"name": "product 1", "quantity": 1, "unit_amount": 1000},
-                      {"name": "product 2", "quantity": 1, "unit_amount": 200}
+                    products:  [
+                     Product(name: "name", quantity: 2, unitAmount: 1234)
                     ],
                     onCreate: (v) {
                       print(v.data);

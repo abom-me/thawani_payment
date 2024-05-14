@@ -5,22 +5,27 @@ import '../viewmodel/thawani_paymentIntent.dart';
 
 class PaySavedWidget extends StatefulWidget {
   const PaySavedWidget(
-      {Key? key,
+      {super.key,
       required this.paid,
       required this.unpaid,
       required this.url,
       required this.api,
       required this.testMode,
       required this.returnLink,
-      required this.payID})
-      : super(key: key);
-
+      required this.payID});
+// url of the payment page
   final String url;
+  // return link after payment
   final String returnLink;
+  // api key
   final String api;
+  // payment id
   final String payID;
+  // function to be called when payment is paid
   final void Function(Map<String, dynamic> data) paid;
+  // test mode to change from production to test
   final bool testMode;
+  // function to be called when payment is not paid
   final void Function(Map<String, dynamic> data) unpaid;
 
   @override
@@ -52,9 +57,11 @@ class _PaySavedWidgetState extends State<PaySavedWidget> {
                     onWebResourceError: (WebResourceError error) {},
                     onNavigationRequest: (NavigationRequest request) async {
                       if (request.url == widget.returnLink) {
+                        // check if the payment is paid
                         setState(() {
                           showLoading = true;
                         });
+                        // confirm payment
                         pay.check(
                             id: widget.payID,
                             apiKey: widget.api,
@@ -78,6 +85,7 @@ class _PaySavedWidgetState extends State<PaySavedWidget> {
                 ..loadRequest(Uri.parse(widget.url)),
             ),
             if (showLoading)
+              // show loading widget
               Container(
                 alignment: Alignment.center,
                 height: MediaQuery.of(context).size.height,

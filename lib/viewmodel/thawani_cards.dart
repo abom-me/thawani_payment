@@ -72,11 +72,11 @@ class ThawaniCards {
       "save_card_on_success": true,
       "client_reference_id": userClintID,
       "mode": "payment",
-      "products": userProducts,
+      "products": userProducts.map((e) => e.toJson()).toList(),
       "success_url":
           userSuccessUrl ?? 'https://abom.me/package/thawani/suc.php',
       "cancel_url": userCancelUrl ?? "https://abom.me/package/thawani/can.php",
-      if (userMetadata != null) "metadata": userMetadata,
+      "metadata": userMetadata,
     }, headers: {
       'Content-Type': "application/json",
       'thawani-api-key': userApiKey
