@@ -97,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Thawani.pay(
                     context,
                     // customerID: "dd",
+                    // savedCardBackground: Colors.green,
                     metadata: {
                       "order_id": "123",
                       "customer_id": "123",
@@ -108,10 +109,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                     onCreateCustomer: (data) {},
                     testMode: true,
+
                     api: 'rRQ26GcsZzoEhbrP2HZvLYDbn9C9et',
                     pKey: 'HGvTMLDssJghr9tlN9gr4DVYt0qyBy',
                     clintID: '123456',
                     onError: (e) {
+
                       print(e);
                     },
                     products:  [
@@ -132,6 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           MaterialPageRoute(builder: (builder) => const V()));
                     },
                     saveCard: true,
+
                   );
                 },
                 child: const Text("Pay Using Thawani"),

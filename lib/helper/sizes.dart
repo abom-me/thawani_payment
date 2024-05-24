@@ -23,13 +23,5 @@ class BoxSize {
     );
   }
 
-  static height(double num) {
-    return SizedBox(
-      height: num,
-    );
-  }
 
-  static empty() {
-    return const SizedBox.shrink();
-  }
 }

@@ -60,9 +60,8 @@ clintID: '12345',
 onError: (e) {
 print(e);
 },
-products: const [
-{"name": "product 1", "quantity": 1, "unit_amount": 1000},
-{"name": "product 2", "quantity": 1, "unit_amount": 200}
+products:  [
+Product(name: "name", quantity: 2, unitAmount: 1234)
 ],
 onCreate: (v) {
 

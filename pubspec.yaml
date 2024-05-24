@@ -1,6 +1,6 @@
 name: thawani_payment
 description: Flutter package helps you to use thawani checkout api with save the cards , and add thawani payment in the Flutter App
-version: 1.2.3
+version: 1.2.4
 homepage: https://github.com/abom-me/thawani_payment
 issue_tracker: https://github.com/abom-me/thawani_payment/issues
 screenshots:
@@ -17,8 +17,8 @@ environment:
 dependencies:
   http: ^1.2.1
   webview_flutter: ^4.7.0
-  webview_flutter_android: ^3.16.1
-  webview_flutter_wkwebview: ^3.13.0
+  webview_flutter_android: ^3.16.2
+  url_launcher: ^6.2.6
   flutter:
     sdk: flutter
   shared_preferences: ^2.2.3

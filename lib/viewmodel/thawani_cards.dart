@@ -7,7 +7,16 @@ import 'package:thawani_payment/models/saveed_cards_model.dart';
 import 'package:thawani_payment/widgets/pay.dart';
 
 class ThawaniCards {
-  get({
+  final KeysViewModel keysViewModel = KeysViewModel();
+
+  /// Retrieves saved cards associated with a customer ID.
+  ///
+  /// [testMode] - Flag indicating if the test mode is enabled.
+  /// [customerId] - The customer ID for whom the saved cards are retrieved.
+  /// [apiKey] - The API key for authentication.
+  /// [onError] - Callback function to be executed on an error.
+  /// [onDone] - Callback function to be executed on successful retrieval.
+  Future<void> get({
     required bool testMode,
     required String customerId,
     required String apiKey,
@@ -22,90 +31,105 @@ class ThawaniCards {
       'Content-Type': "application/json",
       'thawani-api-key': apiKey
     }).then((value) {
-      if (value['code'] == 2000) {
-
+      if (value['code'] == 2000 || value['code'] == 4003) {
+        // Parse the response data into a SavedCardsModel and call onDone callback.
         onDone(SavedCardsModel.fromJson(value));
-      } else if(value['code'] ==4003) {
-        onDone(SavedCardsModel.fromJson(value));
-
-      }else {
-
+      } else {
+        // Handle errors by calling the onError callback.
         onError(value);
       }
     });
   }
 
-  delete(
-      {required String cardId,
-      required void Function() onDelete,
-      required void Function() onError}) {
-    String url = isTestMode
+  /// Deletes a saved card.
+  ///
+  /// [cardId] - The ID of the card to be deleted.
+  /// [onDelete] - Callback function to be executed on successful deletion.
+  /// [onError] - Callback function to be executed on an error.
+  void delete({
+    required String cardId,
+    required void Function() onDelete,
+    required void Function() onError,
+  }) {
+    String url = keysViewModel.isTestMode
         ? "https://uatcheckout.thawani.om/api/v1/payment_methods/$cardId"
         : "https://checkout.thawani.om/api/v1/payment_methods/$cardId";
 
     Request.delete(url: url, data: {}, headers: {
       'Content-Type': "application/json",
-      'thawani-api-key': userApiKey
-    }).then((value) => {
-          if (value['data']['code'] == 2003) {onDelete()} else {}
-        });
+      'thawani-api-key': keysViewModel.userApiKey
+    }).then((value) {
+      if (value['data']['code'] == 2003) {
+        // Call onDelete callback on successful deletion.
+        onDelete();
+      } else {
+        print(value);
+        // Handle errors if necessary.
+      }
+    });
   }
 
-  add(
+  /// Adds a payment session.
+  ///
+  /// [context] - The BuildContext for navigation.
+  /// [onCreate] - Callback function to be executed on successful session creation.
+  /// [onCancelled] - Callback function to be executed if payment is cancelled.
+  /// [onPaid] - Callback function to be executed on successful payment.
+  /// [onError] - Callback function to be executed on an error.
+  void add(
     BuildContext context, {
     required void Function(Create create) onCreate,
-
-    ///The Function And The Result Of Data If The User  Cancelled The Payment.
     required void Function(Map<String, dynamic> payStatus) onCancelled,
-
-    ///The Function And The Result Of Data If The User  Cancelled The Payment.
     required void Function(Map<String, dynamic> payStatus) onPaid,
-
-    ///The Function And The Reason Of The Error,  If Any Error Happen.
     required void Function(Map error)? onError,
   }) {
-    String url = isTestMode
+    String url = keysViewModel.isTestMode
         ? "https://uatcheckout.thawani.om/api/v1/checkout/session"
         : "https://checkout.thawani.om/api/v1/checkout/session";
     Request.post(url: url, data: {
-      "customer_id": userCustomerID,
+      "customer_id": keysViewModel.userCustomerID,
       "save_card_on_success": true,
-      "client_reference_id": userClintID,
+      "client_reference_id": keysViewModel.userClintID,
       "mode": "payment",
-      "products": userProducts.map((e) => e.toJson()).toList(),
-      "success_url":
-          userSuccessUrl ?? 'https://abom.me/package/thawani/suc.php',
-      "cancel_url": userCancelUrl ?? "https://abom.me/package/thawani/can.php",
-      "metadata": userMetadata,
+      "products": keysViewModel.userProducts.map((e) => e.toJson()).toList(),
+      "success_url": keysViewModel.userSuccessUrl ??
+          'https://abom.me/package/thawani/suc.php',
+      "cancel_url": keysViewModel.userCancelUrl ??
+          "https://abom.me/package/thawani/can.php",
+      "metadata": keysViewModel.userMetadata,
     }, headers: {
       'Content-Type': "application/json",
-      'thawani-api-key': userApiKey
-    }).then((value) => {
-          if (value['data']['code'] == 2004)
-            {
-              onCreate(Create.fromJson(value['data'])),
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PayWidget(
-                            api: userApiKey,
-                            uri: value['data']['data']['session_id'],
-                            url: isTestMode == true
-                                ? 'https://uatcheckout.thawani.om/pay/${value['data']['data']['session_id']}?key=$userPKey'
-                                : 'https://checkout.thawani.om/pay/${value['data']['data']['session_id']}?key=$userPKey',
-                            paid: (statusClass) {
-                              onPaid(statusClass);
-                            },
-                            unpaid: (statusClass) {
-                              onCancelled(statusClass);
-                            },
-                            testMode: isTestMode,
-                          ))),
-            }
-          else if (value['data']['code'] != 2004)
-            {onError!(value)}
-          else if (value['data']['code'] == null)
-            {onError!(value['data'])}
-        });
+      'thawani-api-key': keysViewModel.userApiKey
+    }).then((value) {
+      if (value['data']['code'] == 2004) {
+        // Call onCreate callback on successful session creation and navigate to PayWidget.
+        onCreate(Create.fromJson(value['data']));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PayWidget(
+              api: keysViewModel.userApiKey,
+              uri: value['data']['data']['session_id'],
+              url: keysViewModel.isTestMode == true
+                  ? 'https://uatcheckout.thawani.om/pay/${value['data']['data']['session_id']}?key=${keysViewModel.userPKey}'
+                  : 'https://checkout.thawani.om/pay/${value['data']['data']['session_id']}?key=${keysViewModel.userPKey}',
+              paid: (statusClass) {
+                onPaid(statusClass);
+              },
+              unpaid: (statusClass) {
+                onCancelled(statusClass);
+              },
+              testMode: keysViewModel.isTestMode,
+            ),
+          ),
+        );
+      } else if (value['data']['code'] != 2004) {
+        // Call onError callback for other error cases.
+        onError!(value);
+      } else if (value['data']['code'] == null) {
+        // Call onError callback if no error code is provided.
+        onError!(value['data']);
+      }
+    });
   }
 }

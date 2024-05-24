@@ -21,7 +21,9 @@ class SavedCardsScreen extends StatefulWidget {
         required this.metadata,
       required this.onCancelledCard,
       required this.onPaidCard,
-      required this.onCreateCard});
+      required this.onCreateCard,
+
+      });
 
   @override
   State<SavedCardsScreen> createState() => _SavedCardsScreenState();
@@ -41,6 +43,7 @@ class SavedCardsScreen extends StatefulWidget {
 }
 
 class _SavedCardsScreenState extends State<SavedCardsScreen> {
+  KeysViewModel keysViewModel = KeysViewModel();
   PaymentIntentViewModel thawaniPayment = PaymentIntentViewModel();
   ThawaniCards cards = ThawaniCards();
   final String rawSvg =
@@ -62,7 +65,7 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
     final List<CardData> data = widget.saved.data!;
     return Scaffold(
         appBar: AppBar(
-          title: userSavedCardsAppBar,
+          title: keysViewModel.userSavedCardsAppBar,
           actions: [
             IconButton(
                 onPressed: () {
@@ -92,7 +95,7 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
                         children: [
                           InkWell(
                             onTap: () {
-                              Alert.loading(context, userSelectCardLoading);
+                              Alert.loading(context, keysViewModel.userSelectCardLoading);
                               thawaniPayment.create(widget.apiKey,
                                   amount: widget.amount,
                                   returnLink: widget.returnLink,
@@ -126,7 +129,7 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
                                 width: 400,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: userSavedCardBackground),
+                                    color: keysViewModel.userSavedCardBackground),
                                 child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -139,7 +142,7 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(100),
-                                              color: userSavedCardTextColor),
+                                              color: keysViewModel.userSavedCardTextColor),
                                           width: 50,
                                           height: 50,
                                           padding: const EdgeInsets.all(5),
@@ -153,14 +156,14 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
                                         Text(
                                           "Thawani Card",
                                           style: TextStyle(
-                                              color: userSavedCardTextColor,
+                                              color: keysViewModel.userSavedCardTextColor,
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           data[i].brand ?? "",
                                           style: TextStyle(
-                                              color: userSavedCardTextColor,
+                                              color: keysViewModel.userSavedCardTextColor,
                                               fontSize: 17,
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -171,7 +174,7 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
                                       child: Text(
                                         data[i].maskedCard ?? "",
                                         style: TextStyle(
-                                            color: userSavedCardTextColor,
+                                            color: keysViewModel.userSavedCardTextColor,
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -183,14 +186,14 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
                                         Text(
                                           data[i].nickname ?? "",
                                           style: TextStyle(
-                                              color: userSavedCardTextColor,
+                                              color: keysViewModel.userSavedCardTextColor,
                                               fontSize: 17,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           "EXP: ${data[i].expiryMonth} / ${data[i].expiryYear}",
                                           style: TextStyle(
-                                            color: userSavedCardTextColor,
+                                            color: keysViewModel.userSavedCardTextColor,
                                             fontSize: 15,
                                           ),
                                         ),
@@ -202,7 +205,7 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
                           InkWell(
                             borderRadius: BorderRadius.circular(100),
                             onTap: () {
-                              Alert.loading(context, userDeleteLoading,
+                              Alert.loading(context, keysViewModel.userDeleteLoading,
                                   ableToClose: false);
                               cards.delete(
                                   cardId: data[i].id!,
@@ -215,7 +218,7 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
                                   },
                                   onError: () {
                                     Navigator.pop(context);
-                                    Alert.msg(context, '', userDeleteError);
+                                    Alert.msg(context, '', keysViewModel.userDeleteError);
                                   });
                               // setState(() {
                               //   // items.removeAt(index);

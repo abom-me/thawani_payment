@@ -3,15 +3,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thawani_payment/models/create_customers.dart';
 import 'package:thawani_payment/models/saveed_cards_model.dart';
 import 'package:thawani_payment/viewmodel/keys_viewmodel.dart';
+import 'package:thawani_payment/viewmodel/pay.dart';
 import 'package:thawani_payment/viewmodel/thawani_cards.dart';
 import 'package:thawani_payment/viewmodel/thawani_customer.dart';
-import 'package:thawani_payment/widgets/pay.dart';
 import 'package:thawani_payment/widgets/saved_cards_screen.dart';
 import 'models/create.dart';
-import 'helper/req_helper.dart';
 import 'models/products.dart';
 
 class Thawani {
+  KeysViewModel keysViewModel = KeysViewModel();
+  ThawaniPay payApi = ThawaniPay();
   ///  API Code From Thawani Company
   ///
   ///  For Test Mode: rRQ26GcsZzoEhbrP2HZvLYDbn9C9et
@@ -143,27 +144,26 @@ class Thawani {
       this.savedCards,
       this.successUrl,
       this.cancelUrl}) {
-    // ThawaniKeys k=ThawaniKeys();
-    userApiKey = api;
-    userClintID = clintID;
-    userMetadata = metadata;
-    userPKey = pKey;
-    userProducts = products;
-    isTestMode = testMode ?? false;
-    userSuccessUrl = successUrl;
-    userCancelUrl = cancelUrl;
-    userSavedCardBackground = savedCardBackground ?? const Color(0xff0d0d10);
-    userSavedCardTextColor = savedCardTextColor ?? const Color(0xffffffff);
-    userSavedCardsAppBar = savedCardsAppBarText ?? const Text("Saved Cards");
-    userDeleteLoading = deleteText ?? "Deleting...";
-    userSelectCardLoading = selectCardText ?? "Loading...";
-    userDeleteError = deleteTextError ?? "Error, Can't delete this card";
-    userSaveCard = saveCard;
+    keysViewModel.expiredInMinuets=expiredInMinuets;
+    keysViewModel.userApiKey = api;
+    keysViewModel.userClintID = clintID;
+    keysViewModel.userMetadata = metadata;
+    keysViewModel.userPKey = pKey;
+    keysViewModel.userProducts = products;
+    keysViewModel.isTestMode = testMode ?? false;
+    keysViewModel.userSuccessUrl = successUrl;
+    keysViewModel. userCancelUrl = cancelUrl;
+    keysViewModel.userSavedCardBackground=savedCardBackground ?? const Color(0xff0d0d10) ;
+    keysViewModel.userSavedCardTextColor = savedCardTextColor ?? const Color(0xffffffff);
+    keysViewModel.userSavedCardsAppBar = savedCardsAppBarText ?? const Text("Saved Cards");
+    keysViewModel.userDeleteLoading = deleteText ?? "Deleting...";
+    keysViewModel.userSelectCardLoading = selectCardText ?? "Loading...";
+    keysViewModel.userDeleteError = deleteTextError ?? "Error, Can't delete this card";
+    keysViewModel.userSaveCard = saveCard;
 
     ThawaniCustomers().checker(
-      // customerID: customerID,
         customer: customerID,
-        testMode: isTestMode,
+        testMode: keysViewModel.isTestMode,
         apiKey: api,
         customerId: clintID,
         // function to get the error
@@ -175,12 +175,12 @@ class Thawani {
         onDone: (id, clint) {
           // function to get the customer id
           getSavedCustomer?.call(id);
-          userCustomerID = id;
+          keysViewModel.userCustomerID = id;
           if (saveCard) {
             // get the saved cards
             ThawaniCards().get(
               // customer id
-                testMode: isTestMode,
+                testMode: keysViewModel.isTestMode,
                 // api key
                 customerId: id,
 
@@ -190,10 +190,10 @@ class Thawani {
                 },
                 onDone: (data) {
                   if (data.data!.isEmpty) {
-                    payApi(
+                    payApi.payApi(
                         context: context,
                         api: api,
-                        metadata: userMetadata,
+                        metadata: keysViewModel.userMetadata,
                         publishKey: pKey,
                         clintID: clintID,
                         products: products,
@@ -202,7 +202,7 @@ class Thawani {
                         onPaid: onPaid,
                         onError: onError,
                         customerID: id,
-                        testMode: isTestMode);
+                        testMode: keysViewModel.isTestMode);
                   } else {
                     savedCards?.call(data.data!);
 
@@ -223,7 +223,7 @@ class Thawani {
                                   amount: totalAmount,
                                   returnLink: successUrl ??
                                       'https://abom.me/package/thawani/suc.php',
-                                  testMode: isTestMode,
+                                  testMode: keysViewModel.isTestMode,
                                   metadata: metadata,
                                   onCancelledCard:
                                       (Map<String, dynamic> payStatus) {
@@ -243,10 +243,10 @@ class Thawani {
                 });
           } else {
             // if the user don't want to save the card
-            payApi(
+            payApi.payApi(
                 context: context,
                 api: api,
-                metadata: userMetadata,
+                metadata: keysViewModel.userMetadata,
                 publishKey: pKey,
                 clintID: clintID,
                 products: products,
@@ -255,7 +255,7 @@ class Thawani {
                 onPaid: onPaid,
                 onError: onError,
                 customerID: id,
-                testMode: isTestMode);
+                testMode: keysViewModel.isTestMode);
           }
         },
         newCustomer: (CreateCustomerModel userData) async {
@@ -265,79 +265,9 @@ class Thawani {
         });
   }
 
-  payApi({
-    required BuildContext context,
-    required String api,
-    required String publishKey,
-    required String clintID,
-    required String customerID,
-    required List<Product> products,
-    String? successUrl,
-    String? cancelUrl,
-    required Map<String, dynamic> metadata,
-    required bool testMode,
-    required void Function(Create create) onCreate,
 
-    ///The Function And The Result Of Data If The User  Cancelled The Payment.
-    required void Function(Map<String, dynamic> payStatus) onCancelled,
 
-    ///The Function And The Result Of Data If The User  Cancelled The Payment.
-    required void Function(Map<String, dynamic> payStatus) onPaid,
 
-    ///The Function And The Reason Of The Error,  If Any Error Happen.
-    required Function(Map error)? onError,
-  }) async {
-    late Map<String, dynamic> dataBack;
-
-    Future<Create> createS() async {
-      return Create.fromJson(dataBack);
-    }
-
-    // Future<StatusClass> payStatus(dataStatute) async {
-    //   return StatusClass.fromJson(dataStatute);
-    // }
-
-    dataBack = await RequestHelper.postRequest(
-        api,
-        {
-          if (userSaveCard) "customer_id": customerID,
-          "save_card_on_success": saveCard,
-          if (expiredInMinuets !=null) "expired_in_minutes": expiredInMinuets,
-          "client_reference_id": clintID,
-          "mode": "payment",
-          "products": products.map((e) => e.toJson()).toList(),
-          "success_url":
-              successUrl ?? 'https://abom.me/package/thawani/suc.php',
-          "cancel_url": cancelUrl ?? "https://abom.me/package/thawani/can.php",
-         "metadata": metadata,
-        },
-        testMode);
-    if (dataBack['code'] == 2004) {
-      createS().then((value) => {onCreate(value)});
-      if (context.mounted) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => PayWidget(
-                      api: api,
-                      uri: dataBack['data']['session_id'],
-                      url: testMode == true
-                          ? 'https://uatcheckout.thawani.om/pay/${dataBack['data']['session_id']}?key=$publishKey'
-                          : 'https://checkout.thawani.om/pay/${dataBack['data']['session_id']}?key=$publishKey',
-                      paid: (statusClass) {
-                        onPaid(statusClass);
-                      },
-                      unpaid: (statusClass) {
-                        onCancelled(statusClass);
-                      },
-                      testMode: testMode,
-                    )));
-      }
-      if (context.mounted) return;
-    } else if (dataBack['code'] != 2004) {
-      return onError!(dataBack);
-    } else if (dataBack['code'] == null) {
-      return onError!(dataBack);
-    }
-  }
 }
+
+

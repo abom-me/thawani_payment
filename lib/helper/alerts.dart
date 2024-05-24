@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:thawani_payment/helper/sizes.dart';
@@ -12,14 +11,12 @@ class Alert {
           AlertDialog(
             scrollable: true,
             elevation: 0,
-            // backgroundColor: Colors.white,
+
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
             content: Container(
               alignment: Alignment.center,
-              // constraints:BoxConstraints(
-              //   maxHeight: 50
-              // ),
+
               width: Sizes.width(context),
 
               padding: const EdgeInsets.symmetric(vertical: 5),
@@ -39,7 +36,7 @@ class Alert {
                                 fontSize: 17,
                                 fontWeight: FontWeight.w900),
                           ),
-                          BoxSize.height(10),
+                     const SizedBox(height: 10),
                           Text(
                             msg,
                             style: const TextStyle(
@@ -72,7 +69,7 @@ class Alert {
     );
   }
 
-  static loading(context, title, {bool? ableToClose = true}) {
+  static loading(context, title, {bool? ableToClose = false}) {
     showDialog(
       context: context,
       barrierDismissible: ableToClose ?? false,
@@ -107,59 +104,4 @@ class Alert {
     );
   }
 
-  static snackbar(context, {required String text, bool? isFloating = false}) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        behavior: isFloating == true ? SnackBarBehavior.floating : null,
-        // backgroundColor: purpleColor,
-        content: Text(
-          text,
-          style: const TextStyle(fontWeight: FontWeight.w700),
-        )));
-  }
-
-  Widget? snackbar2(context, {required String text, bool? isFloating = false}) {
-    bool show = true;
-    Timer(const Duration(seconds: 5), () {
-      show = false;
-    });
-
-    if (show) {
-      return Container(
-        height: 100,
-        width: 100,
-        color: Colors.green,
-      );
-    }
-    return null;
-  }
-
-  static popup(context,
-      {required Widget widget,
-      EdgeInsetsGeometry? padding,
-      MainAxisAlignment? main}) {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            elevation: 0,
-            backgroundColor: Colors.white,
-            content: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: padding ??
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10)),
-                  // width: Sizes.width(context)*0.9,
-
-                  child: widget,
-                )
-              ],
-            ),
-          );
-        });
-  }
 }

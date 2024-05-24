@@ -8,8 +8,8 @@ class ThawaniCustomer {
   }
 
   static Future<String> get() async {
-    SharedPreferences share = await SharedPreferences.getInstance();
 
+    SharedPreferences share = await SharedPreferences.getInstance();
     return share.getString('customerId') ?? "There is no saved customer";
   }
 

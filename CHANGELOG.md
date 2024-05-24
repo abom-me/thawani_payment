@@ -108,4 +108,6 @@
     "name": "product 1", "quantity": 1,"unit_amount": 100 }`
   * (**Update**) Update errors handling
 
+* ## 1.2.4
+  * (**Fix**) Showing the hidden class, now will not be shown
 
