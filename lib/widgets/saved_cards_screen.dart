@@ -135,7 +135,7 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
                         width: 400,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: widget.cardColor ?? Colors.white,
+                          color: widget.cardColor ?? Colors.black,
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -146,7 +146,7 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
                                 Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(100),
-                                    color: widget.textCardColor ?? Colors.black,
+                                    color: widget.textCardColor ?? Colors.white,
                                   ),
                                   width: 50,
                                   height: 50,
@@ -160,7 +160,7 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
                                 Text(
                                   "Thawani Card",
                                   style: TextStyle(
-                                    color: widget.textCardColor ?? Colors.black,
+                                    color: widget.textCardColor ?? Colors.white,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -168,7 +168,7 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
                                 Text(
                                   data[i].brand ?? "",
                                   style: TextStyle(
-                                    color: widget.textCardColor ?? Colors.black,
+                                    color: widget.textCardColor ?? Colors.white,
                                     fontSize: 17,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -180,7 +180,7 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
                               child: Text(
                                 data[i].maskedCard ?? "",
                                 style: TextStyle(
-                                  color: widget.textCardColor ?? Colors.black,
+                                  color: widget.textCardColor ?? Colors.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -192,7 +192,7 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
                                 Text(
                                   data[i].nickname ?? "",
                                   style: TextStyle(
-                                    color: widget.textCardColor ?? Colors.black,
+                                    color: widget.textCardColor ?? Colors.white,
                                     fontSize: 17,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -200,7 +200,7 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
                                 Text(
                                   "EXP: ${data[i].expiryMonth} / ${data[i].expiryYear}",
                                   style: TextStyle(
-                                    color: widget.textCardColor ?? Colors.black,
+                                    color: widget.textCardColor ?? Colors.white,
                                     fontSize: 15,
                                   ),
                                 ),
