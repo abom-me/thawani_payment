@@ -111,3 +111,7 @@
 * ## 1.2.4
   * (**Fix**) Showing the hidden class, now will not be shown
 
+* ## 1.2.3+1
+ * (**Fix**) some issues in the saved cards screen 
+
+

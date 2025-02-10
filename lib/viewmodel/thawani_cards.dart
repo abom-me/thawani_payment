@@ -91,12 +91,20 @@ class ThawaniCards {
       "save_card_on_success": true,
       "client_reference_id": keysViewModel.userClintID,
       "mode": "payment",
+<<<<<<< Updated upstream
       "products": keysViewModel.userProducts.map((e) => e.toJson()).toList(),
       "success_url": keysViewModel.userSuccessUrl ??
           'https://abom.me/package/thawani/suc.php',
       "cancel_url": keysViewModel.userCancelUrl ??
           "https://abom.me/package/thawani/can.php",
       "metadata": keysViewModel.userMetadata,
+=======
+      "products": userProducts.map((e) => e.toJson()).toList(),
+      "success_url":
+          userSuccessUrl ?? 'https://example.com/package/thawani/suc.php',
+      "cancel_url": userCancelUrl ?? "https://example.com/package/thawani/can.php",
+      "metadata": userMetadata,
+>>>>>>> Stashed changes
     }, headers: {
       'Content-Type': "application/json",
       'thawani-api-key': keysViewModel.userApiKey

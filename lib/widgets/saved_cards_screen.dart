@@ -6,11 +6,10 @@ import 'package:thawani_payment/models/saveed_cards_model.dart';
 import 'package:thawani_payment/viewmodel/thawani_cards.dart';
 import 'package:thawani_payment/widgets/saved_pay_screen.dart';
 
-import '../viewmodel/keys_viewmodel.dart';
-
 import '../viewmodel/thawani_paymentIntent.dart';
 
 class SavedCardsScreen extends StatefulWidget {
+<<<<<<< Updated upstream
   const SavedCardsScreen(
       {super.key,
       required this.saved,
@@ -24,19 +23,40 @@ class SavedCardsScreen extends StatefulWidget {
       required this.onCreateCard,
 
       });
+=======
+  const SavedCardsScreen({
+    super.key,
+    required this.saved,
+    required this.apiKey,
+    required this.amount,
+    required this.returnLink,
+    required this.testMode,
+    required this.metadata,
+    this.onError,
+    required this.onCancelledCard,
+    required this.onPaidCard,
+    required this.onCreateCard,
+    this.appBarTitle,
+    this.bgColor,
+    this.cardColor,
+    this.textCardColor,
+  });
+>>>>>>> Stashed changes
 
   @override
   State<SavedCardsScreen> createState() => _SavedCardsScreenState();
+
   final SavedCardsModel saved;
   final String apiKey;
   final int amount;
   final String returnLink;
   final bool testMode;
-
-  ///The Function And The Result Of Data If The User  Cancelled The Payment.
+  final String? appBarTitle;
+  final Color? bgColor;
+  final Color? cardColor;
+  final Color? textCardColor;
   final void Function(Map<String, dynamic> payStatus) onCancelledCard;
-
-  ///The Function And The Result Of Data If The User  Cancelled The Payment.
+  final void Function(Map<dynamic, dynamic> data)? onError;
   final void Function(Map<String, dynamic> payStatus) onPaidCard;
   final void Function(Create data) onCreateCard;
   final Map<String, dynamic> metadata;
@@ -56,7 +76,6 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -64,6 +83,7 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
   Widget build(BuildContext context) {
     final List<CardData> data = widget.saved.data!;
     return Scaffold(
+<<<<<<< Updated upstream
         appBar: AppBar(
           title: keysViewModel.userSavedCardsAppBar,
           actions: [
@@ -225,19 +245,188 @@ class _SavedCardsScreenState extends State<SavedCardsScreen> {
                               // });
                             },
                             child: Container(
+=======
+      appBar: AppBar(
+        title: Text(widget.appBarTitle ?? 'Saved Cards'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              cards.add(context,
+                  onCreate: widget.onCreateCard,
+                  onCancelled: widget.onCancelledCard,
+                  onPaid: widget.onPaidCard,
+                  onError: widget.onError);
+            },
+            icon: const Icon(Icons.add_card),
+          ),
+        ],
+      ),
+      body: Directionality(
+        textDirection: TextDirection.ltr,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (context, i) {
+              return Container(
+                margin: const EdgeInsets.only(bottom: 20, top: 10),
+                child: Column(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Alert.loading(context, 'Loading...',
+                            ableToClose: false);
+                        thawaniPayment.create(
+                          widget.apiKey,
+                          amount: widget.amount,
+                          returnLink: widget.returnLink,
+                          testMode: widget.testMode,
+                          cardID: data[i].id!,
+                          clientID: data[i].customer!.customerClientId!,
+                          onDone: (c, d) {
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => PaySavedWidget(
+                                  paid: widget.onPaidCard,
+                                  unpaid: widget.onCancelledCard,
+                                  url: c.data!.nextAction!.url!,
+                                  api: widget.apiKey,
+                                  testMode: widget.testMode,
+                                  returnLink: widget.returnLink,
+                                  payID: c.data!.id!,
+                                ),
+                              ),
+                            );
+                          },
+                          onError: (d) {
+                            Navigator.pop(context);
+                            widget.onError?.call(d);
+                          },
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 25),
+                        height: 200,
+                        width: 400,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: widget.cardColor ?? Colors.white,
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    color: widget.textCardColor ?? Colors.black,
+                                  ),
+                                  width: 50,
+                                  height: 50,
+                                  padding: const EdgeInsets.all(5),
+                                  child: SvgPicture.string(
+                                    rawSvg,
+                                    theme: const SvgTheme(
+                                        currentColor: Color(0xff80be59)),
+                                  ),
+                                ),
+                                Text(
+                                  "Thawani Card",
+                                  style: TextStyle(
+                                    color: widget.textCardColor ?? Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  data[i].brand ?? "",
+                                  style: TextStyle(
+                                    color: widget.textCardColor ?? Colors.black,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Align(
+>>>>>>> Stashed changes
                               alignment: Alignment.center,
-                              width: 40,
-                              height: 40,
-                              child: const Icon(
-                                Icons.delete,
-                                color: Colors.red,
+                              child: Text(
+                                data[i].maskedCard ?? "",
+                                style: TextStyle(
+                                  color: widget.textCardColor ?? Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                          )
-                        ],
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  data[i].nickname ?? "",
+                                  style: TextStyle(
+                                    color: widget.textCardColor ?? Colors.black,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  "EXP: ${data[i].expiryMonth} / ${data[i].expiryYear}",
+                                  style: TextStyle(
+                                    color: widget.textCardColor ?? Colors.black,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    );
-                  })),
-        ));
+                    ),
+                    InkWell(
+                      borderRadius: BorderRadius.circular(100),
+                      onTap: () {
+                        Alert.loading(context, 'Deleting...',
+                            ableToClose: false);
+                        cards.delete(
+                          cardId: data[i].id!,
+                          onDelete: () {
+                            Navigator.pop(context);
+                            setState(() {
+                              data.removeAt(i);
+                            });
+                          },
+                          onError: () {
+                            Navigator.pop(context);
+                            Alert.msg(context, '', 'Error deleting card');
+                          },
+                        );
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 40,
+                        height: 40,
+                        child: const Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
   }
 }
